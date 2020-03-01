@@ -78,6 +78,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Network\Entities\ArpRecord.cs" />
     <Compile Include="Network\Entities\Device.cs" />
     <Compile Include="Network\NetworkRouter.cs" />
     <Compile Include="Properties\Annotations.cs" />

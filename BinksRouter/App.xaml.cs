@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using BinksRouter.Network;
 
 namespace BinksRouter
 {
@@ -13,5 +14,6 @@ namespace BinksRouter
     /// </summary>
     public partial class App : Application
     {
+        public NetworkRouter RouterInstance { get; } = new NetworkRouter();
     }
 }

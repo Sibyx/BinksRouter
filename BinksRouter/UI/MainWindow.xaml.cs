@@ -20,9 +20,22 @@ namespace BinksRouter
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static App CurrentApp => (App)Application.Current;
+
         public MainWindow()
         {
             InitializeComponent();
+            DeviceTable.DataContext = CurrentApp.RouterInstance.Devices;
+        }
+
+        private void SettingsClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DeviceRecordDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -3,10 +3,58 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:BinksRouter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="BinksRouter" 
+        Height="450" 
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        >
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="45*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <Button 
+                Width="30"
+                Name="SettingsButton"
+                Click="SettingsClick"
+                >
+                <fa:ImageAwesome Icon="Gears" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <DataGrid 
+                ItemsSource="{Binding}" 
+                AutoGenerateColumns="False" 
+                Grid.Column="0" 
+                CanUserResizeColumns="False"
+                Name="DeviceTable"
+                IsReadOnly="True"
+            >
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <EventSetter Event="MouseDoubleClick" Handler="DeviceRecordDoubleClick"/>
+                    </Style>
+                </DataGrid.RowStyle>
+
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Header="Running" Binding="{Binding Path=IsRunning, Mode=OneWay}" Width="15*"/>
+                    <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name, Mode=OneWay}" Width="25*"/>
+                    <DataGridTextColumn Header="IP Address"  Binding="{Binding Path=NetworkAddress, Mode=OneWay}" Width="45*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Window>
