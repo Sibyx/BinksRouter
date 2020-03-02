@@ -34,5 +34,17 @@ namespace BinksRouter.Properties {
                 this["ArpRecordLifetime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public double ClockRate {
+            get {
+                return ((double)(this["ClockRate"]));
+            }
+            set {
+                this["ClockRate"] = value;
+            }
+        }
     }
 }

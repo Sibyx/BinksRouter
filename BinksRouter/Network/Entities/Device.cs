@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BinksRouter.Annotations;
@@ -50,6 +51,8 @@ namespace BinksRouter.Network.Entities
             }
         }
 
+        public PhysicalAddress MacAddress => _captureDevice.MacAddress;
+
         public Device(NpcapDevice device, EventHandler<EthernetPacket> eventHandler)
         {
             PacketReceived += eventHandler;
@@ -59,7 +62,7 @@ namespace BinksRouter.Network.Entities
             _captureDevice = device;
         }
 
-        public bool Activate(IPAddress ipAddress)
+        public bool Activate()
         {
             if (IsActive) 
                 return false;
@@ -67,9 +70,27 @@ namespace BinksRouter.Network.Entities
             _captureDevice.OnPacketArrival += PacketArrival;
             _captureDevice.Open(OpenFlags.Promiscuous | OpenFlags.NoCaptureLocal, 10);
             _captureDevice.StartCapture();
+            IsActive = true;
 
             return true;
+        }
 
+        public bool Deactivate()
+        {
+            if (IsActive)
+            {
+                _captureDevice.StopCapture();
+                _captureDevice.Close();
+                IsActive = false;
+                return true;
+            }
+
+            return false;
+        }
+
+        public void Send(EthernetPacket ethernet)
+        {
+            _captureDevice.SendPacket(ethernet);
         }
 
         private void PacketArrival(object sender, CaptureEventArgs e)

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using BinksRouter.Annotations;
 
 namespace BinksRouter.Network.Entities
 {
-    class ArpRecord: INotifyPropertyChanged
+    public class ArpRecord: INotifyPropertyChanged
     {
         private uint _timeToLive;
         private IPAddress _networkAddress;
+        private PhysicalAddress _macAddress;
         private readonly object _arpLock = new object();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -34,9 +36,21 @@ namespace BinksRouter.Network.Entities
             }
         }
 
-        public ArpRecord(IPAddress ip)
+        public PhysicalAddress MacAddress
+        {
+            get => _macAddress;
+            private set
+            {
+                _macAddress = value;
+                OnPropertyChanged(nameof(MacAddress));
+            }
+        }
+
+        public ArpRecord(IPAddress ip, PhysicalAddress mac)
         {
             NetworkAddress = ip;
+            MacAddress = mac;
+
             TimeToLive = Properties.Settings.Default.ArpRecordLifetime;
         }
 

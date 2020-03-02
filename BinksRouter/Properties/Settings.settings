@@ -5,5 +5,8 @@
     <Setting Name="ArpRecordLifetime" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
+    <Setting Name="ClockRate" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

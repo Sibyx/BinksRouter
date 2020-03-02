@@ -17,12 +17,49 @@
             <RowDefinition Height="45*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel>
+        <StackPanel 
+            Grid.Row="0"
+            HorizontalAlignment="Left"
+            Orientation = "Horizontal"
+            Margin="5"
+        >
+            <Button 
+                Width="30" 
+                Name="StartButton"
+                Click="StartClick"
+                Margin="5 0"
+            >
+                <fa:ImageAwesome Icon="Play" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+            <Button 
+                Width="30" 
+                Name="StopButton"
+                IsEnabled="False"
+                Click="StopClick">
+                <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+        </StackPanel>
+
+        <StackPanel 
+            Grid.Row="0"
+            HorizontalAlignment="Right"
+            Orientation = "Horizontal"
+            Margin="5"
+        >
+            <Button 
+                Width="30"
+                Name="ArpRequestButton"
+                Click="SendArpRequestClick"
+                Margin="5 0"
+            >
+                <fa:ImageAwesome Icon="PaperPlane" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+
             <Button 
                 Width="30"
                 Name="SettingsButton"
                 Click="SettingsClick"
-                >
+            >
                 <fa:ImageAwesome Icon="Gears" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
             </Button>
         </StackPanel>
@@ -50,9 +87,23 @@
                 </DataGrid.RowStyle>
 
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header="Running" Binding="{Binding Path=IsRunning, Mode=OneWay}" Width="15*"/>
-                    <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name, Mode=OneWay}" Width="25*"/>
+                    <DataGridCheckBoxColumn Header="Running" Binding="{Binding Path=IsRunning, Mode=OneWay}" Width="20*"/>
+                    <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name, Mode=OneWay}" Width="55*"/>
                     <DataGridTextColumn Header="IP Address"  Binding="{Binding Path=NetworkAddress, Mode=OneWay}" Width="45*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid 
+                ItemsSource="{Binding}" 
+                AutoGenerateColumns="False" 
+                Grid.Column="1" 
+                CanUserResizeColumns="False"
+                Name="ArpTable"
+                IsReadOnly="True"
+            >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="IP Address"  Binding="{Binding NetworkAddress}" Width="50*"/>
+                    <DataGridTextColumn Header="Hardware Address"  Binding="{Binding MacAddress}" Width="50*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
