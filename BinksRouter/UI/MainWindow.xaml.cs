@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -62,7 +63,16 @@ namespace BinksRouter.UI
 
         private void RouteDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            if (sender != null)
+            {
+                var row = sender as DataGridRow;
+
+                if (row?.DataContext is Route route)
+                {
+                    var routeDetailWindow = new RouteDetail(route);
+                    routeDetailWindow.ShowDialog();
+                }
+            }
         }
 
         private void ArpRecordDoubleClick(object sender, MouseButtonEventArgs e)
@@ -77,6 +87,31 @@ namespace BinksRouter.UI
                     CurrentApp.RouterInstance.ArpTable.TryRemove(record.NetworkAddress, out _);
                     RefreshArpTable(this, null);
                 }
+            }
+        }
+
+        private void ClearArpClick(object sender, RoutedEventArgs e)
+        {
+            CurrentApp.Logging.Warn("Manual purge of ARP table");
+            CurrentApp.RouterInstance.ArpTable.Clear();
+            RefreshArpTable(this, null);
+        }
+
+        private void AddRouteClick(object sender, RoutedEventArgs e)
+        {
+            var route = new Route(Route.RouteType.Static)
+            {
+                NetworkId = IPAddress.Any,
+                NetworkMask = IPAddress.Broadcast,
+                NextHop = IPAddress.Any
+            };
+            var routeDetailWindow = new RouteDetail(route);
+            routeDetailWindow.ShowDialog();
+
+            if (!CurrentApp.RouterInstance.Routes.Contains(route))
+            {
+                CurrentApp.RouterInstance.Routes.Add(route);
+                RoutingTable.Items.Refresh();
             }
         }
     }

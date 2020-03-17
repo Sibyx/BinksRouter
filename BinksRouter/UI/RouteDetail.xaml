@@ -1,0 +1,52 @@
+﻿<Window x:Class="BinksRouter.UI.RouteDetail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BinksRouter.UI"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="Route Detail" 
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Height="375" 
+        Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel 
+            Grid.Row="0"
+            Orientation = "Vertical"
+            Margin="5">
+
+            <TextBlock Padding="5">Route type</TextBlock>
+            <TextBox Name="RouteTypeBox" Padding="5" IsReadOnly="True"/>
+
+            <TextBlock Padding="5">IP address</TextBlock>
+            <TextBox Name="IpAddressBox" Padding="5"/>
+
+            <TextBlock Padding="5">Mask</TextBlock>
+            <TextBox Name="MaskBox" Padding="5" Margin="0,0,0,5"/>
+
+            <TextBlock Padding="5">Next-Hop</TextBlock>
+            <TextBox Name="NextHopBox" Padding="5" Margin="0,0,0,5"/>
+
+            <TextBlock Padding="5">Outgoing interface</TextBlock>
+            <TextBox Name="InterfaceBox" Padding="5" Margin="0,0,0,5" IsReadOnly="True"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Width="30" Name="RemoveButton" Click="RemoveClick" Margin="0 0 5 0">
+                <fa:ImageAwesome Icon="Trash" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+            <Button Width="30" Name="SaveButton" Click="SaveClick">
+                <fa:ImageAwesome Icon="Save" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+        </StackPanel>
+
+
+    </Grid>
+</Window>

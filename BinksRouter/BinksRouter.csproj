@@ -80,6 +80,9 @@
     <Compile Include="Network\Entities\Route.cs" />
     <Compile Include="Network\RoutingTable.cs" />
     <Compile Include="UI\Converters\CutePhysicalAddress.cs" />
+    <Compile Include="UI\RouteDetail.xaml.cs">
+      <DependentUpon>RouteDetail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SendArp.xaml.cs">
       <DependentUpon>SendArp.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UI\RouteDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\SendArp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

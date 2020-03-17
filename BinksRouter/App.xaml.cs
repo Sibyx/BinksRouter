@@ -15,7 +15,10 @@ namespace BinksRouter
         {
             AsyncLogging = true,
             IncludeHostname = true,
-            IncludeThreadId = true
+            IncludeThreadId = true,
+            IncludeSeverity = true,
+            ConsoleEnable = false,
+            IncludeUtcTimestamp = true
         };
     }
 }

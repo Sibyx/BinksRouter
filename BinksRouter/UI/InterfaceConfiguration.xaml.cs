@@ -19,15 +19,15 @@ namespace BinksRouter.UI
 
             if (_interface.NetworkAddress != null)
             {
-                DeviceIpAddressBox.Text = _interface.NetworkAddress.ToString();
+                IpAddressBox.Text = _interface.NetworkAddress.ToString();
             }
 
             if (_interface.NetworkMask != null)
             {
-                DeviceMaskBox.Text = @interface.NetworkMask.ToString();
+                MaskBox.Text = @interface.NetworkMask.ToString();
             }
 
-            DeviceIsActiveBox.IsChecked = _interface.IsActive;
+            IsActiveBox.IsChecked = _interface.IsActive;
         }
 
         private static void InlineTry(Action action)
@@ -44,9 +44,9 @@ namespace BinksRouter.UI
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
-            InlineTry(() => _interface.NetworkAddress = IPAddress.Parse(DeviceIpAddressBox.Text));
-            InlineTry(() => _interface.NetworkMask = IPAddress.Parse(DeviceMaskBox.Text));
-            if (DeviceIsActiveBox?.IsChecked != null) _interface.IsActive = (bool) DeviceIsActiveBox?.IsChecked;
+            InlineTry(() => _interface.NetworkAddress = IPAddress.Parse(IpAddressBox.Text));
+            InlineTry(() => _interface.NetworkMask = IPAddress.Parse(MaskBox.Text));
+            if (IsActiveBox?.IsChecked != null) _interface.IsActive = (bool) IsActiveBox?.IsChecked;
             Close();
         }
     }

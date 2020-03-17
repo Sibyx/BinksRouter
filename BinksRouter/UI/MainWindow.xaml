@@ -24,6 +24,28 @@
             Orientation = "Horizontal"
             Margin="5"
         >
+            <Button 
+                Width="30"
+                Name="SettingsButton"
+                Click="SettingsClick"
+            >
+                <fa:ImageAwesome Icon="Gears" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+
+            <Button 
+                Width="30"
+                Name="ClearArpButton"
+                Click="ClearArpClick"
+                Margin="5 0 0 0"
+            >
+                <fa:ImageAwesome Icon="Repeat" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+
+            <Button Width="30" Name="ArpRequestButton" Click="SendArpRequestClick" Margin="5 0 0 0">
+                <fa:ImageAwesome Icon="PaperPlane" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+
+
         </StackPanel>
 
         <StackPanel 
@@ -34,19 +56,10 @@
         >
             <Button 
                 Width="30"
-                Name="ArpRequestButton"
-                Click="SendArpRequestClick"
-                Margin="5 0"
+                Name="AddRouteButton"
+                Click="AddRouteClick"
             >
-                <fa:ImageAwesome Icon="PaperPlane" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
-            </Button>
-
-            <Button 
-                Width="30"
-                Name="SettingsButton"
-                Click="SettingsClick"
-            >
-                <fa:ImageAwesome Icon="Gears" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+                <fa:ImageAwesome Icon="Plus" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
             </Button>
         </StackPanel>
 
@@ -115,6 +128,8 @@
                 AutoGenerateColumns="False" 
                 Grid.Column="1" 
                 CanUserResizeColumns="False"
+                CanUserSortColumns="False"
+                CanUserReorderColumns="False"
                 Name="RoutingTable"
                 IsReadOnly="True"
             >
@@ -126,11 +141,11 @@
                 </DataGrid.RowStyle>
 
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header="Type" Binding="{Binding Path=Type, Mode=OneWay}" Width="5*"/>
-                    <DataGridTextColumn Header="Network ID"  Binding="{Binding Path=NetworkId, Mode=OneWay}" Width="20*"/>
-                    <DataGridTextColumn Header="Network Mask"  Binding="{Binding Path=NetworkMask, Mode=OneWay}" Width="20*"/>
-                    <DataGridTextColumn Header="Next-hop"  Binding="{Binding Path=NextHop, Mode=OneWay}" Width="20*"/>
-                    <DataGridTextColumn Header="Interface"  Binding="{Binding Path=Interface, Mode=OneWay}" Width="35*"/>
+                    <DataGridTextColumn Binding="{Binding Type, Mode=OneWay}" Width="5*"/>
+                    <DataGridTextColumn Header="Network ID"  Binding="{Binding NetworkId}" Width="20*"/>
+                    <DataGridTextColumn Header="Network Mask"  Binding="{Binding NetworkMask}" Width="20*"/>
+                    <DataGridTextColumn Header="Next-hop"  Binding="{Binding NextHop}" Width="20*"/>
+                    <DataGridTextColumn Header="Interface"  Binding="{Binding Interface}" Width="35*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

@@ -11,16 +11,20 @@ namespace BinksRouter.Network.Entities
 
         public enum RouteType
         {
+            [Description("C")]
             Connected,
+
+            [Description("S")]
             Static,
-            Rib
+
+            [Description("R")]
+            Rip
         }
 
         #endregion
 
         #region Private properties
 
-        private RouteType _type;
         private IPAddress _networkId;
         private IPAddress _networkMask;
         [CanBeNull] private IPAddress _nextHop;
@@ -36,15 +40,7 @@ namespace BinksRouter.Network.Entities
 
         #region Public properties
 
-        public RouteType Type
-        {
-            get => _type;
-            private set
-            {
-                _type = value;
-                NotifyPropertyChanged(nameof(Type));
-            }
-        }
+        public RouteType Type { get; }
 
         public IPAddress NetworkId
         {
@@ -87,6 +83,11 @@ namespace BinksRouter.Network.Entities
         }
 
         #endregion
+
+        public Route(RouteType type)
+        {
+            Type = type;
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)

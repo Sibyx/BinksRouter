@@ -66,7 +66,7 @@ namespace BinksRouter.Network
         }
 
         [CanBeNull]
-        private PhysicalAddress arpResolve(IPAddress ipAddress)
+        private PhysicalAddress ArpResolve(IPAddress ipAddress)
         {
             // TODO: ProxyARP
             if (ArpTable.ContainsKey(ipAddress))
