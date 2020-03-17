@@ -79,6 +79,7 @@
     <Compile Include="Network\ArpManager.cs" />
     <Compile Include="Network\Entities\Route.cs" />
     <Compile Include="Network\RoutingTable.cs" />
+    <Compile Include="UI\Converters\CutePhysicalAddress.cs" />
     <Compile Include="UI\SendArp.xaml.cs">
       <DependentUpon>SendArp.xaml</DependentUpon>
     </Compile>

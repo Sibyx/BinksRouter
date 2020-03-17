@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:converters="clr-namespace:BinksRouter.UI.Converters"
         xmlns:local="clr-namespace:BinksRouter"
         mc:Ignorable="d"
         Title="BinksRouter" 
         Height="450" 
-        Width="800"
+        Width="900"
         WindowStartupLocation="CenterScreen"
         >
     <Grid>
@@ -106,9 +107,13 @@
                     Name="ArpTable"
                     IsReadOnly="True"
                 >
+                    <DataGrid.Resources>
+                        <converters:CutePhysicalAddress x:Key="CutePhysicalAddress" />
+                    </DataGrid.Resources>
+
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="IP Address"  Binding="{Binding NetworkAddress}" Width="50*"/>
-                        <DataGridTextColumn Header="Hardware Address"  Binding="{Binding MacAddress}" Width="50*"/>
+                        <DataGridTextColumn Header="Hardware Address"  Binding="{Binding MacAddress, Converter={StaticResource CutePhysicalAddress}}" Width="50*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

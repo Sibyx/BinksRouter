@@ -18,6 +18,7 @@ namespace BinksRouter.Network.Entities
         private bool _isActive;
         private string _name;
         [CanBeNull] private IPAddress _networkAddress;
+        [CanBeNull] private IPAddress _networkMask;
         private readonly NpcapDevice _captureDevice;
 
         #endregion
@@ -58,6 +59,16 @@ namespace BinksRouter.Network.Entities
             {
                 _networkAddress = value;
                 NotifyPropertyChanged(nameof(NetworkAddress));
+            }
+        }
+
+        public IPAddress NetworkMask
+        {
+            get => _networkMask;
+            set
+            {
+                _networkMask = value;
+                NotifyPropertyChanged(nameof(NetworkMask));
             }
         }
 
