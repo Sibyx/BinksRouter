@@ -83,7 +83,7 @@
     <Compile Include="UI\SendArp.xaml.cs">
       <DependentUpon>SendArp.xaml</DependentUpon>
     </Compile>
-    <Page Include="UI\DeviceConfiguration.xaml">
+    <Page Include="UI\InterfaceConfiguration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,11 +96,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Network\Entities\ArpRecord.cs" />
-    <Compile Include="Network\Entities\Device.cs" />
+    <Compile Include="Network\Entities\Interface.cs" />
     <Compile Include="Network\NetworkRouter.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="UI\DeviceConfiguration.xaml.cs">
-      <DependentUpon>DeviceConfiguration.xaml</DependentUpon>
+    <Compile Include="UI\InterfaceConfiguration.xaml.cs">
+      <DependentUpon>InterfaceConfiguration.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

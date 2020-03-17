@@ -11,7 +11,7 @@ using SharpPcap.Npcap;
 
 namespace BinksRouter.Network.Entities
 {
-    public class Device : INotifyPropertyChanged
+    public class Interface : INotifyPropertyChanged
     {
         #region Private properties
 
@@ -35,8 +35,26 @@ namespace BinksRouter.Network.Entities
         public bool IsActive
         {
             get => _isActive;
-            private set
+            set
             {
+                if (!_isActive && value)
+                {
+                    _captureDevice.OnPacketArrival += PacketArrival;
+                    _captureDevice.Open(OpenFlags.Promiscuous | OpenFlags.NoCaptureLocal, 10);
+                    _captureDevice.StartCapture();
+                }
+                else if (_isActive && !value)
+                {
+                    _captureDevice.StopCapture();
+                    _captureDevice.Close();
+                }
+                else
+                {
+                    // Ugly as fuck, I am sorry :(
+                    // Main brain hurts but I don't want to trigger NotifyPropertyChanged is is not necessary
+                    return;
+                }
+
                 _isActive = value;
                 NotifyPropertyChanged(nameof(IsActive));
             }
@@ -76,39 +94,13 @@ namespace BinksRouter.Network.Entities
 
         #endregion
 
-        public Device(NpcapDevice device, EventHandler<EthernetPacket> eventHandler)
+        public Interface(NpcapDevice device, EventHandler<EthernetPacket> eventHandler)
         {
             PacketReceived += eventHandler;
 
             IsActive = false;
             Name = device.Interface.FriendlyName;
             _captureDevice = device;
-        }
-
-        public bool Activate()
-        {
-            if (IsActive) 
-                return false;
-            
-            _captureDevice.OnPacketArrival += PacketArrival;
-            _captureDevice.Open(OpenFlags.Promiscuous | OpenFlags.NoCaptureLocal, 10);
-            _captureDevice.StartCapture();
-            IsActive = true;
-
-            return true;
-        }
-
-        public bool Deactivate()
-        {
-            if (IsActive)
-            {
-                _captureDevice.StopCapture();
-                _captureDevice.Close();
-                IsActive = false;
-                return true;
-            }
-
-            return false;
         }
 
         public void Send(EthernetPacket ethernet)

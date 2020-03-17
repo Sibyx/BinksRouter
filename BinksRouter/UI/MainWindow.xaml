@@ -1,4 +1,4 @@
-﻿<Window x:Class="BinksRouter.MainWindow"
+﻿<Window x:Class="BinksRouter.UI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -24,21 +24,6 @@
             Orientation = "Horizontal"
             Margin="5"
         >
-            <Button 
-                Width="30" 
-                Name="StartButton"
-                Click="StartClick"
-                Margin="5 0"
-            >
-                <fa:ImageAwesome Icon="Play" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
-            </Button>
-            <Button 
-                Width="30" 
-                Name="StopButton"
-                IsEnabled="False"
-                Click="StopClick">
-                <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
-            </Button>
         </StackPanel>
 
         <StackPanel 
@@ -67,8 +52,8 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40*"/>
-                <ColumnDefinition Width="60*"/>
+                <ColumnDefinition Width="45*"/>
+                <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
@@ -82,20 +67,20 @@
                     AutoGenerateColumns="False" 
                     Grid.Row="0" 
                     CanUserResizeColumns="False"
-                    Name="DeviceTable"
+                    Name="Interfaces"
                     IsReadOnly="True"
                 >
-
                     <DataGrid.RowStyle>
                         <Style TargetType="{x:Type DataGridRow}">
-                            <EventSetter Event="MouseDoubleClick" Handler="DeviceRecordDoubleClick"/>
+                            <EventSetter Event="MouseDoubleClick" Handler="InterfaceDoubleClick"/>
                         </Style>
                     </DataGrid.RowStyle>
 
                     <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Header="Active" Binding="{Binding Path=IsActive, Mode=OneWay}" Width="20*"/>
-                        <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name, Mode=OneWay}" Width="55*"/>
-                        <DataGridTextColumn Header="IP Address"  Binding="{Binding Path=NetworkAddress, Mode=OneWay}" Width="45*"/>
+                        <DataGridCheckBoxColumn Header="Active" Binding="{Binding Path=IsActive, Mode=OneWay}" Width="10*"/>
+                        <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name, Mode=OneWay}" Width="42*"/>
+                        <DataGridTextColumn Header="IP Address"  Binding="{Binding Path=NetworkAddress, Mode=OneWay}" Width="24*"/>
+                        <DataGridTextColumn Header="Mask"  Binding="{Binding Path=NetworkMask, Mode=OneWay}" Width="24*"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
@@ -107,13 +92,20 @@
                     Name="ArpTable"
                     IsReadOnly="True"
                 >
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <EventSetter Event="MouseDoubleClick" Handler="ArpRecordDoubleClick"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+
                     <DataGrid.Resources>
                         <converters:CutePhysicalAddress x:Key="CutePhysicalAddress" />
                     </DataGrid.Resources>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="IP Address"  Binding="{Binding NetworkAddress}" Width="50*"/>
-                        <DataGridTextColumn Header="Hardware Address"  Binding="{Binding MacAddress, Converter={StaticResource CutePhysicalAddress}}" Width="50*"/>
+                        <DataGridTextColumn Header="IP Address"  Binding="{Binding NetworkAddress}" Width="42*"/>
+                        <DataGridTextColumn Header="Hardware Address"  Binding="{Binding MacAddress, Converter={StaticResource CutePhysicalAddress}}" Width="42*"/>
+                        <DataGridTextColumn Header="TTL"  Binding="{Binding TimeToLive}" Width="14*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -134,11 +126,11 @@
                 </DataGrid.RowStyle>
 
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header="Type" Binding="{Binding Path=Type, Mode=OneWay}" Width="10*"/>
+                    <DataGridCheckBoxColumn Header="Type" Binding="{Binding Path=Type, Mode=OneWay}" Width="5*"/>
                     <DataGridTextColumn Header="Network ID"  Binding="{Binding Path=NetworkId, Mode=OneWay}" Width="20*"/>
                     <DataGridTextColumn Header="Network Mask"  Binding="{Binding Path=NetworkMask, Mode=OneWay}" Width="20*"/>
                     <DataGridTextColumn Header="Next-hop"  Binding="{Binding Path=NextHop, Mode=OneWay}" Width="20*"/>
-                    <DataGridTextColumn Header="Interface"  Binding="{Binding Path=Interface, Mode=OneWay}" Width="30*"/>
+                    <DataGridTextColumn Header="Interface"  Binding="{Binding Path=Interface, Mode=OneWay}" Width="35*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

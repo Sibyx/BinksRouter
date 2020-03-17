@@ -5,21 +5,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using BinksRouter.Network.Entities;
-using BinksRouter.UI;
 
-namespace BinksRouter
+namespace BinksRouter.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public static App CurrentApp => (App)Application.Current;
 
         public MainWindow()
         {
             InitializeComponent();
-            DeviceTable.DataContext = CurrentApp.RouterInstance.Devices;
+            Interfaces.DataContext = CurrentApp.RouterInstance.Interfaces;
             ArpTable.DataContext = CurrentApp.RouterInstance.ArpTable.Values.ToList();
             RoutingTable.DataContext = CurrentApp.RouterInstance.Routes;
 
@@ -31,35 +30,19 @@ namespace BinksRouter
             throw new NotImplementedException();
         }
 
-        private void DeviceRecordDoubleClick(object sender, MouseButtonEventArgs e)
+        private void InterfaceDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (sender != null)
             {
                 var row = sender as DataGridRow;
-                var deviceConfigurationWindow = new DeviceConfiguration(row?.DataContext as Device);
+                var deviceConfigurationWindow = new InterfaceConfiguration(row?.DataContext as Interface);
                 deviceConfigurationWindow.ShowDialog();
             }
         }
 
-        private void StartClick(object sender, RoutedEventArgs e)
-        {
-            StartButton.IsEnabled = false;
-            StopButton.IsEnabled = true;
-
-            CurrentApp.RouterInstance.Start(DeviceTable.SelectedItems);
-        }
-
-        private void StopClick(object sender, RoutedEventArgs e)
-        {
-            StartButton.IsEnabled = true;
-            StopButton.IsEnabled = false;
-
-            CurrentApp.RouterInstance.Stop();
-        }
-
         private void SendArpRequestClick(object sender, RoutedEventArgs e)
         {
-            var sendArpRequestWindow = new SendArp(DeviceTable.SelectedItems);
+            var sendArpRequestWindow = new SendArp(Interfaces.SelectedItems);
             sendArpRequestWindow.ShowDialog();
         }
 
@@ -80,6 +63,21 @@ namespace BinksRouter
         private void RouteDoubleClick(object sender, MouseButtonEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void ArpRecordDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                var row = sender as DataGridRow;
+
+                if (row?.DataContext is ArpRecord record)
+                {
+                    CurrentApp.Logging.Info($"Manual removal of {record}");
+                    CurrentApp.RouterInstance.ArpTable.TryRemove(record.NetworkAddress, out _);
+                    RefreshArpTable(this, null);
+                }
+            }
         }
     }
 }

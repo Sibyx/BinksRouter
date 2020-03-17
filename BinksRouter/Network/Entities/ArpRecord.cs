@@ -80,7 +80,7 @@ namespace BinksRouter.Network.Entities
         {
             lock (_arpLock)
             {
-                return !Convert.ToBoolean(TimeToLive--);
+                return !Convert.ToBoolean(--TimeToLive);
             }
         }
 

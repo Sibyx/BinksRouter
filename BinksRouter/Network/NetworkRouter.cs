@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Timers;
+using System.Windows;
 using BinksRouter.Annotations;
 using BinksRouter.Network.Entities;
 using PacketDotNet;
@@ -13,10 +14,11 @@ namespace BinksRouter.Network
 {
     public class NetworkRouter
     {
-        public List<Device> Devices { get; } = new List<Device>();
+        public List<Interface> Interfaces { get; } = new List<Interface>();
         public ArpManager ArpTable { get; } = new ArpManager();
         public RoutingTable Routes { get; } = new RoutingTable(); 
         public event EventHandler<EventArgs> RouterChange;
+        private static App CurrentApp => (App)Application.Current;
 
         private readonly Timer _clock = new Timer(Properties.Settings.Default.ClockRate);
 
@@ -28,14 +30,18 @@ namespace BinksRouter.Network
             {
                 if (device.Interface.FriendlyName != null)
                 {
-                    Devices.Add(new Device(device, PacketArrival));
+                    Interfaces.Add(new Interface(device, PacketArrival));
                 }
             }
+
+            _clock.Elapsed += ClockTickEvent;
+            _clock.Elapsed += ArpTable.ClockTickEvent;
+            _clock.Start();
         }
 
         private void PacketArrival(object sender, EthernetPacket eth)
         {
-            var senderDevice = (Device)sender;
+            var senderDevice = (Interface)sender;
 
             var arp = eth.Extract<ArpPacket>();
             if (arp != null && Equals(arp.TargetProtocolAddress, senderDevice.NetworkAddress))
@@ -71,24 +77,19 @@ namespace BinksRouter.Network
             return null;
         }
 
-        public void Start([ItemCanBeNull] IList devices)
-        {
-            _clock.Start();
-
-            foreach (Device device in devices)
-            {
-                device?.Activate();
-            }
-        }
-
         public void Stop()
         {
             _clock.Stop();
 
-            foreach (var device in Devices)
+            foreach (var device in Interfaces)
             {
-                device.Deactivate();
+                device.IsActive = false;
             }
+        }
+
+        private void ClockTickEvent(object source, ElapsedEventArgs e)
+        {
+            RouterChange?.Invoke(this, null);
         }
     }
 }

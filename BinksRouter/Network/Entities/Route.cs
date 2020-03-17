@@ -24,7 +24,7 @@ namespace BinksRouter.Network.Entities
         private IPAddress _networkId;
         private IPAddress _networkMask;
         [CanBeNull] private IPAddress _nextHop;
-        [CanBeNull] private Device _interface;
+        [CanBeNull] private Interface _interface;
 
         #endregion
 
@@ -76,7 +76,7 @@ namespace BinksRouter.Network.Entities
             }
         }
 
-        public Device Interface
+        public Interface Interface
         {
             get => _interface;
             set

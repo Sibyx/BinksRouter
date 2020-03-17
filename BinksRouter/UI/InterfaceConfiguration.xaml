@@ -1,12 +1,12 @@
-﻿<Window x:Class="BinksRouter.UI.DeviceConfiguration"
+﻿<Window x:Class="BinksRouter.UI.InterfaceConfiguration"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BinksRouter.UI"
         mc:Ignorable="d"
-        Title="Device Configuration" 
-        Height="160" 
+        Title="Interface Configuration" 
+        Height="230" 
         Width="300"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -14,14 +14,26 @@
     <Grid>
         <StackPanel 
             Orientation = "Vertical"
-            Margin="5"
-        >
-            <TextBlock Padding="5">Device IP</TextBlock>
-            <TextBox Name="DeviceIpAddressBox" Padding="5" Margin="0,0,0,10"/>
+            Margin="5">
+
+            <TextBlock Padding="5">IP address</TextBlock>
+            <TextBox Name="DeviceIpAddressBox" Padding="5"/>
+
+            <TextBlock Padding="5">Mask</TextBlock>
+            <TextBox Name="DeviceMaskBox" Padding="5" Margin="0,0,0,5"/>
+
+
+            <CheckBox
+                Name="DeviceIsActiveBox"
+                Margin="0,0,0,10"
+                IsThreeState="False"
+            >
+                Active
+            </CheckBox>
 
 
             <Button 
-                Name="AddButton"
+                Name="SaveButton"
                 Padding="8"
                 Click="SaveClick"
             >

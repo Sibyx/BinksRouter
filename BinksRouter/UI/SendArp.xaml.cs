@@ -26,7 +26,7 @@ namespace BinksRouter.UI
         {
 
             if (_devices != null)
-                foreach (Device device in _devices)
+                foreach (Interface device in _devices)
                 {
                     var arp = new ArpPacket(
                         ArpOperation.Request,

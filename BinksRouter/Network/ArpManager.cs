@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Timers;
 using System.Windows;
 using BinksRouter.Network.Entities;
 using PacketDotNet;
@@ -11,7 +12,7 @@ namespace BinksRouter.Network
     {
         private static App CurrentApp => (App)Application.Current;
 
-        public bool Resolve(Device sender, ArpPacket arp)
+        public bool Resolve(Interface sender, ArpPacket arp)
         {
             if (arp.Operation == ArpOperation.Request)
             {
@@ -38,21 +39,34 @@ namespace BinksRouter.Network
             return false;
         }
 
-        public void Request(Device device, IPAddress ipAddress)
+        public void Request(Interface @interface, IPAddress ipAddress)
         {
             var arp = new ArpPacket(
                 ArpOperation.Request,
                 PhysicalAddress.Parse("FF-FF-FF-FF-FF-FF"),
                 ipAddress,
-                device.MacAddress,
-                device.NetworkAddress
+                @interface.MacAddress,
+                @interface.NetworkAddress
             );
 
             var ethernetPacket =
-                new EthernetPacket(device.MacAddress, PhysicalAddress.Parse("FF-FF-FF-FF-FF-FF"), EthernetType.None)
+                new EthernetPacket(@interface.MacAddress, PhysicalAddress.Parse("FF-FF-FF-FF-FF-FF"), EthernetType.None)
                     { PayloadPacket = arp };
 
-            device.Send(ethernetPacket);
+            @interface.Send(ethernetPacket);
+        }
+
+        public void ClockTickEvent(object source, ElapsedEventArgs e)
+        {
+            // Checking expiration of ArpRecords
+            foreach (var ip in Keys)
+            {
+                if (this[ip].TimeToDie())
+                {
+                    TryRemove(ip, out var record);
+                    CurrentApp.Logging.Info($"Removing {record} from ARP table");
+                }
+            }
         }
     }
 }
