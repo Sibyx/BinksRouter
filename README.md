@@ -2,7 +2,7 @@
 
 Simple .NET based software router for Windows implemented in C# using WPF.
 
-![MainWindow](docs/screenshots/MainWindow.jpg)
+![](docs/screenshots/MainWindow.JPG)
 
 ## Credits
 
