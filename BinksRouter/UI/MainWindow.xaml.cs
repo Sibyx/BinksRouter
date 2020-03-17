@@ -20,9 +20,10 @@ namespace BinksRouter
         {
             InitializeComponent();
             DeviceTable.DataContext = CurrentApp.RouterInstance.Devices;
-            ArpTable.DataContext = CurrentApp.RouterInstance.ArpRecords.Values.ToList();
+            ArpTable.DataContext = CurrentApp.RouterInstance.ArpTable.Values.ToList();
+            RoutingTable.DataContext = CurrentApp.RouterInstance.Routes;
 
-            CurrentApp.RouterInstance.ArpChange += RefreshArpTable;
+            CurrentApp.RouterInstance.RouterChange += RefreshArpTable;
         }
 
         private void SettingsClick(object sender, RoutedEventArgs e)
@@ -66,8 +67,7 @@ namespace BinksRouter
         {
             CurrentApp.Dispatcher?.Invoke(() =>
             {
-                Console.WriteLine(CurrentApp.RouterInstance.ArpRecords.Values.ToList());
-                ArpTable.DataContext = CurrentApp.RouterInstance.ArpRecords.Values.ToList();
+                ArpTable.DataContext = CurrentApp.RouterInstance.ArpTable.Values.ToList();
             });
         }
 
@@ -75,6 +75,11 @@ namespace BinksRouter
         {
             base.OnClosing(e);
             CurrentApp.RouterInstance.Stop();
+        }
+
+        private void RouteDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

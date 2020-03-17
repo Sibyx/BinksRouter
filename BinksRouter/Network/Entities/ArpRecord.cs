@@ -9,12 +9,22 @@ namespace BinksRouter.Network.Entities
 {
     public class ArpRecord: INotifyPropertyChanged
     {
+        #region Private attributes
+
         private uint _timeToLive;
         private IPAddress _networkAddress;
         private PhysicalAddress _macAddress;
         private readonly object _arpLock = new object();
 
+        #endregion
+
+        #region Events
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Public properties
 
         public uint TimeToLive
         {
@@ -45,6 +55,9 @@ namespace BinksRouter.Network.Entities
                 OnPropertyChanged(nameof(MacAddress));
             }
         }
+
+
+        #endregion
 
         public ArpRecord(IPAddress ip, PhysicalAddress mac)
         {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Timers;
 using BinksRouter.Annotations;
 using BinksRouter.Network.Entities;
@@ -13,8 +14,9 @@ namespace BinksRouter.Network
     public class NetworkRouter
     {
         public List<Device> Devices { get; } = new List<Device>();
-        public ConcurrentDictionary<string, ArpRecord> ArpRecords { get; } = new ConcurrentDictionary<string, ArpRecord>();
-        public event EventHandler<EventArgs> ArpChange;
+        public ArpManager ArpTable { get; } = new ArpManager();
+        public RoutingTable Routes { get; } = new RoutingTable(); 
+        public event EventHandler<EventArgs> RouterChange;
 
         private readonly Timer _clock = new Timer(Properties.Settings.Default.ClockRate);
 
@@ -38,27 +40,35 @@ namespace BinksRouter.Network
             var arp = eth.Extract<ArpPacket>();
             if (arp != null && Equals(arp.TargetProtocolAddress, senderDevice.NetworkAddress))
             {
-                if (arp.Operation == ArpOperation.Request)
+                if (ArpTable.Resolve(senderDevice, arp))
                 {
-                    var arpResponse = new ArpPacket(
-                        ArpOperation.Response,
-                        arp.SenderHardwareAddress,
-                        arp.SenderProtocolAddress,
-                        senderDevice.MacAddress,
-                        senderDevice.NetworkAddress
-                    );
-
-                    var ethernetPacket = new EthernetPacket(senderDevice.MacAddress, arp.SenderHardwareAddress, EthernetType.None)
-                        { PayloadPacket = arpResponse };
-
-                    senderDevice.Send(ethernetPacket);
+                    RouterChange?.Invoke(this, null);
                 }
-                else
-                {
-                    ArpRecords.TryAdd(arp.SenderProtocolAddress.ToString(), new ArpRecord(arp.SenderProtocolAddress, arp.SenderHardwareAddress));
-                    ArpChange?.Invoke(this, null);
-                }
+                return;
             }
+
+            var ip = eth.Extract<IPPacket>();
+            if (ip != null)
+            {
+                if (Equals(ip.DestinationAddress, senderDevice.NetworkAddress))
+                {
+                    Console.WriteLine("Chi chi chi, nieco pre mna!");
+                }
+
+                return;
+            }
+        }
+
+        [CanBeNull]
+        private PhysicalAddress arpResolve(IPAddress ipAddress)
+        {
+            // TODO: ProxyARP
+            if (ArpTable.ContainsKey(ipAddress))
+            {
+                return ArpTable[ipAddress].MacAddress;
+            }
+
+            return null;
         }
 
         public void Start([ItemCanBeNull] IList devices)

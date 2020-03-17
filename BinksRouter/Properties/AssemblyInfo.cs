@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("BinksRouter")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Simple .NET based software router for Windows implemented in C# using WPF")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("FIIT STU")]
 [assembly: AssemblyProduct("BinksRouter")]

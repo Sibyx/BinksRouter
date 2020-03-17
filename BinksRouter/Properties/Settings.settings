@@ -8,5 +8,14 @@
     <Setting Name="ClockRate" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
+    <Setting Name="SyslogIp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.2.20</Value>
+    </Setting>
+    <Setting Name="SyslogPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">514</Value>
+    </Setting>
+    <Setting Name="Hostname" Type="System.String" Scope="User">
+      <Value Profile="(Default)">binksrouter</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

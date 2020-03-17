@@ -5,6 +5,19 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinksRouter", "BinksRouter\BinksRouter.csproj", "{3F21AC48-5B21-46F9-93A9-519F424E21DB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0621DD3D-CE5D-4F26-87B5-1DD71053A703}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{40EF27A6-D4B0-4329-A884-EBDD105C0994}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "screenshots", "screenshots", "{8407334A-6077-40C1-88A5-EB3FC40AF050}"
+	ProjectSection(SolutionItems) = preProject
+		docs\screenshots\MainWindow.JPG = docs\screenshots\MainWindow.JPG
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +31,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40EF27A6-D4B0-4329-A884-EBDD105C0994} = {0621DD3D-CE5D-4F26-87B5-1DD71053A703}
+		{8407334A-6077-40C1-88A5-EB3FC40AF050} = {40EF27A6-D4B0-4329-A884-EBDD105C0994}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60129F28-C63B-409D-99EE-649AC8110BC9}

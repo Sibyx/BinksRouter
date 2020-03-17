@@ -66,44 +66,74 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="60*"/>
             </Grid.ColumnDefinitions>
 
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"></RowDefinition>
+                    <RowDefinition Height="50*"></RowDefinition>
+                </Grid.RowDefinitions>
 
-            <DataGrid 
-                ItemsSource="{Binding}" 
-                AutoGenerateColumns="False" 
-                Grid.Column="0" 
-                CanUserResizeColumns="False"
-                Name="DeviceTable"
-                IsReadOnly="True"
-            >
+                <DataGrid 
+                    ItemsSource="{Binding}" 
+                    AutoGenerateColumns="False" 
+                    Grid.Row="0" 
+                    CanUserResizeColumns="False"
+                    Name="DeviceTable"
+                    IsReadOnly="True"
+                >
 
-                <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}">
-                        <EventSetter Event="MouseDoubleClick" Handler="DeviceRecordDoubleClick"/>
-                    </Style>
-                </DataGrid.RowStyle>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <EventSetter Event="MouseDoubleClick" Handler="DeviceRecordDoubleClick"/>
+                        </Style>
+                    </DataGrid.RowStyle>
 
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header="Running" Binding="{Binding Path=IsRunning, Mode=OneWay}" Width="20*"/>
-                    <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name, Mode=OneWay}" Width="55*"/>
-                    <DataGridTextColumn Header="IP Address"  Binding="{Binding Path=NetworkAddress, Mode=OneWay}" Width="45*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Header="Active" Binding="{Binding Path=IsActive, Mode=OneWay}" Width="20*"/>
+                        <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name, Mode=OneWay}" Width="55*"/>
+                        <DataGridTextColumn Header="IP Address"  Binding="{Binding Path=NetworkAddress, Mode=OneWay}" Width="45*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <DataGrid 
+                    ItemsSource="{Binding}" 
+                    AutoGenerateColumns="False" 
+                    Grid.Row="1" 
+                    CanUserResizeColumns="False"
+                    Name="ArpTable"
+                    IsReadOnly="True"
+                >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="IP Address"  Binding="{Binding NetworkAddress}" Width="50*"/>
+                        <DataGridTextColumn Header="Hardware Address"  Binding="{Binding MacAddress}" Width="50*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
 
             <DataGrid 
                 ItemsSource="{Binding}" 
                 AutoGenerateColumns="False" 
                 Grid.Column="1" 
                 CanUserResizeColumns="False"
-                Name="ArpTable"
+                Name="RoutingTable"
                 IsReadOnly="True"
             >
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <EventSetter Event="MouseDoubleClick" Handler="RouteDoubleClick"/>
+                    </Style>
+                </DataGrid.RowStyle>
+
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="IP Address"  Binding="{Binding NetworkAddress}" Width="50*"/>
-                    <DataGridTextColumn Header="Hardware Address"  Binding="{Binding MacAddress}" Width="50*"/>
+                    <DataGridCheckBoxColumn Header="Type" Binding="{Binding Path=Type, Mode=OneWay}" Width="10*"/>
+                    <DataGridTextColumn Header="Network ID"  Binding="{Binding Path=NetworkId, Mode=OneWay}" Width="20*"/>
+                    <DataGridTextColumn Header="Network Mask"  Binding="{Binding Path=NetworkMask, Mode=OneWay}" Width="20*"/>
+                    <DataGridTextColumn Header="Next-hop"  Binding="{Binding Path=NextHop, Mode=OneWay}" Width="20*"/>
+                    <DataGridTextColumn Header="Interface"  Binding="{Binding Path=Interface, Mode=OneWay}" Width="30*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using BinksRouter.Network;
+using BinksRouter.Properties;
+using SyslogLogging;
 
 namespace BinksRouter
 {
@@ -15,5 +11,11 @@ namespace BinksRouter
     public partial class App : Application
     {
         public NetworkRouter RouterInstance { get; } = new NetworkRouter();
+        public LoggingModule Logging { get; } = new LoggingModule(Settings.Default.SyslogIp, Settings.Default.SyslogPort)
+        {
+            AsyncLogging = true,
+            IncludeHostname = true,
+            IncludeThreadId = true
+        };
     }
 }

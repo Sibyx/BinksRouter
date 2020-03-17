@@ -46,5 +46,41 @@ namespace BinksRouter.Properties {
                 this["ClockRate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.2.20")]
+        public string SyslogIp {
+            get {
+                return ((string)(this["SyslogIp"]));
+            }
+            set {
+                this["SyslogIp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("514")]
+        public int SyslogPort {
+            get {
+                return ((int)(this["SyslogPort"]));
+            }
+            set {
+                this["SyslogPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("binksrouter")]
+        public string Hostname {
+            get {
+                return ((string)(this["Hostname"]));
+            }
+            set {
+                this["Hostname"] = value;
+            }
+        }
     }
 }

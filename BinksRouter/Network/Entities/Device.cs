@@ -13,13 +13,23 @@ namespace BinksRouter.Network.Entities
 {
     public class Device : INotifyPropertyChanged
     {
+        #region Private properties
+
         private bool _isActive;
         private string _name;
         [CanBeNull] private IPAddress _networkAddress;
         private readonly NpcapDevice _captureDevice;
 
+        #endregion
+
+        #region Events
+
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<EthernetPacket> PacketReceived;
+
+        #endregion
+
+        #region Public properties
 
         public bool IsActive
         {
@@ -27,7 +37,7 @@ namespace BinksRouter.Network.Entities
             private set
             {
                 _isActive = value;
-                OnPropertyChanged(nameof(IsActive));
+                NotifyPropertyChanged(nameof(IsActive));
             }
         }
 
@@ -37,7 +47,7 @@ namespace BinksRouter.Network.Entities
             private set
             {
                 _name = value;
-                OnPropertyChanged(nameof(Name));
+                NotifyPropertyChanged(nameof(Name));
             }
         }
 
@@ -47,11 +57,13 @@ namespace BinksRouter.Network.Entities
             set
             {
                 _networkAddress = value;
-                OnPropertyChanged(nameof(NetworkAddress));
+                NotifyPropertyChanged(nameof(NetworkAddress));
             }
         }
 
         public PhysicalAddress MacAddress => _captureDevice.MacAddress;
+
+        #endregion
 
         public Device(NpcapDevice device, EventHandler<EthernetPacket> eventHandler)
         {
@@ -107,7 +119,7 @@ namespace BinksRouter.Network.Entities
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
