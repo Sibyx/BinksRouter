@@ -76,6 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Extensions\IpAddressExtensions.cs" />
     <Compile Include="Network\ArpManager.cs" />
     <Compile Include="Network\Entities\Route.cs" />
     <Compile Include="Network\RoutingTable.cs" />

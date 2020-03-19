@@ -121,6 +121,11 @@ namespace BinksRouter.Network.Entities
             }
         }
 
+        public bool OnSameNetwork(IPAddress ipAddress)
+        {
+            return true;
+        }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Timers;
@@ -45,12 +43,12 @@ namespace BinksRouter.Network
 
         private void PacketArrival(object sender, EthernetPacket eth)
         {
-            var senderDevice = (Interface)sender;
+            var myInterface = (Interface)sender;
 
             var arp = eth.Extract<ArpPacket>();
-            if (arp != null && Equals(arp.TargetProtocolAddress, senderDevice.NetworkAddress))
+            if (arp != null && (Equals(arp.TargetProtocolAddress, myInterface.NetworkAddress)))
             {
-                if (ArpTable.Resolve(senderDevice, arp))
+                if (ArpTable.Resolve(myInterface, arp))
                 {
                     RouterChange?.Invoke(this, null);
                 }
@@ -60,9 +58,24 @@ namespace BinksRouter.Network
             var ip = eth.Extract<IPPacket>();
             if (ip != null)
             {
-                if (Equals(ip.DestinationAddress, senderDevice.NetworkAddress))
+                if (Equals(ip.DestinationAddress, myInterface.NetworkAddress))
                 {
-                    Console.WriteLine("Chi chi chi, nieco pre mna!");
+                    CurrentApp.Logging.Debug("Mesa called Jar Jar Binks, mesa your humble servant! (Received  IP packet)");
+                }
+                else if (myInterface.OnSameNetwork(ip.DestinationAddress))
+                {
+                    var destinationMac = ArpResolve(ip.DestinationAddress);
+                    if (destinationMac != null)
+                    {
+                        myInterface.Send(new EthernetPacket(myInterface.MacAddress, destinationMac, eth.Type)
+                        {
+                            PayloadPacket = ip
+                        });
+                    }
+                }
+                else
+                {
+                    // TODO: routing
                 }
 
                 return;
@@ -70,12 +83,16 @@ namespace BinksRouter.Network
         }
 
         [CanBeNull]
-        private PhysicalAddress ArpResolve(IPAddress ipAddress)
+        private PhysicalAddress ArpResolve(IPAddress ipAddress, Interface myInterface)
         {
             // TODO: ProxyARP
             if (ArpTable.ContainsKey(ipAddress))
             {
                 return ArpTable[ipAddress].MacAddress;
+            }
+            else if (myInterface.OnSameNetwork(ipAddress))
+            {
+
             }
 
             return null;
