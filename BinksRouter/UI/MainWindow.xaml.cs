@@ -38,6 +38,7 @@ namespace BinksRouter.UI
                 var row = sender as DataGridRow;
                 var deviceConfigurationWindow = new InterfaceConfiguration(row?.DataContext as Interface);
                 deviceConfigurationWindow.ShowDialog();
+                RoutingTable.Items.Refresh();
             }
         }
 

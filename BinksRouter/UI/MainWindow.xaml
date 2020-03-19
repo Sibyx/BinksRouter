@@ -6,6 +6,7 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:converters="clr-namespace:BinksRouter.UI.Converters"
         xmlns:local="clr-namespace:BinksRouter"
+        xmlns:ui="clr-namespace:BinksRouter.UI"
         mc:Ignorable="d"
         Title="BinksRouter" 
         Height="450" 
@@ -140,12 +141,16 @@
                     </Style>
                 </DataGrid.RowStyle>
 
+                <DataGrid.Resources>
+                    <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+                </DataGrid.Resources>
+
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Type, Mode=OneWay}" Width="5*"/>
+                    <DataGridTextColumn Binding="{Binding Type, Converter={StaticResource EnumDescriptionConverter}}" Width="5*"/>
                     <DataGridTextColumn Header="Network ID"  Binding="{Binding NetworkId}" Width="20*"/>
                     <DataGridTextColumn Header="Network Mask"  Binding="{Binding NetworkMask}" Width="20*"/>
                     <DataGridTextColumn Header="Next-hop"  Binding="{Binding NextHop}" Width="20*"/>
-                    <DataGridTextColumn Header="Interface"  Binding="{Binding Interface}" Width="35*"/>
+                    <DataGridTextColumn Header="Interface"  Binding="{Binding Interface.Name}" Width="35*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

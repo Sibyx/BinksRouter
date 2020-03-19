@@ -19,7 +19,7 @@ namespace BinksRouter.UI
             RouteTypeBox.Text = route.Type.ToString();
             IpAddressBox.Text = route.NetworkId.ToString();
             MaskBox.Text = route.NetworkMask.ToString();
-            NextHopBox.Text = route.NextHop.ToString();
+            if (route.NextHop != null) NextHopBox.Text = route.NextHop.ToString();
             if (route.Interface != null) InterfaceBox.Text = route.Interface.Name;
 
             _route = route;

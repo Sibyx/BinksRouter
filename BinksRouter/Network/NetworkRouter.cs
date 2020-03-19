@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Timers;
@@ -30,7 +32,9 @@ namespace BinksRouter.Network
             {
                 if (device.Interface.FriendlyName != null)
                 {
-                    Interfaces.Add(new Interface(device, PacketArrival));
+                    var networkInterface = new Interface(device, PacketArrival);
+                    networkInterface.PropertyChanged += InterfaceChanged;
+                    Interfaces.Add(networkInterface);
                 }
             }
 
@@ -90,6 +94,26 @@ namespace BinksRouter.Network
         private void ClockTickEvent(object source, ElapsedEventArgs e)
         {
             RouterChange?.Invoke(this, null);
+        }
+
+        private void InterfaceChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            if (sender is Interface myInterface)
+            {
+                // Routes.Remove(Routes.Single(route => route.Interface.Equals(myInterface)));
+                Routes.RemoveAll(record => record.Interface != null && record.Interface.Equals(myInterface));
+               
+                if (myInterface.IsActive)
+                {
+                    Routes.Add(new Route(Route.RouteType.Connected)
+                    {
+                        Interface = myInterface,
+                        NetworkId = myInterface.NetworkAddress,
+                        NetworkMask = myInterface.NetworkMask
+                    });
+                    RouterChange?.Invoke(this, null);
+                }
+            }
         }
     }
 }

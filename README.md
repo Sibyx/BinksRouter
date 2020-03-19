@@ -1,13 +1,13 @@
 ﻿# BinksRouter
 
-Simple .NET based software router for Windows implemented in C# using WPF.
+Simple .NET based software router for Windows implemented in C# using [WPF](https://docs.microsoft.com/en-us/dotnet/framework/wpf/).
 
 ## Features
 
 - Static routing
-- ProxyARP implementation
-- Dynamic routing using RIPv2 protocol
-- Logging to Syslog
+- [ProxyARP](https://networklessons.com/cisco/ccie-routing-switching/proxy-arp-explained) implementation
+- Dynamic routing using [RIPv2](https://tools.ietf.org/html/rfc1723) protocol
+- Logging to [Syslog](https://tools.ietf.org/html/rfc5424)
 
 ![](docs/screenshots/MainWindow.JPG)
 

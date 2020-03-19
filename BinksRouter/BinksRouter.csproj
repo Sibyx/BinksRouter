@@ -80,6 +80,7 @@
     <Compile Include="Network\Entities\Route.cs" />
     <Compile Include="Network\RoutingTable.cs" />
     <Compile Include="UI\Converters\CutePhysicalAddress.cs" />
+    <Compile Include="UI\Converters\EnumDescriptionConverter.cs" />
     <Compile Include="UI\RouteDetail.xaml.cs">
       <DependentUpon>RouteDetail.xaml</DependentUpon>
     </Compile>
