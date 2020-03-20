@@ -12,7 +12,7 @@ namespace BinksRouter.Network
     {
         private static App CurrentApp => (App)Application.Current;
 
-        public bool Resolve(Interface sender, ArpPacket arp)
+        public bool Process(Interface sender, ArpPacket arp)
         {
             if (arp.Operation == ArpOperation.Request)
             {

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Net;
-using System.Net.NetworkInformation;
 using System.Timers;
 using System.Windows;
-using BinksRouter.Annotations;
 using BinksRouter.Network.Entities;
 using PacketDotNet;
 using SharpPcap.Npcap;
@@ -46,12 +43,27 @@ namespace BinksRouter.Network
             var myInterface = (Interface)sender;
 
             var arp = eth.Extract<ArpPacket>();
-            if (arp != null && (Equals(arp.TargetProtocolAddress, myInterface.NetworkAddress)))
+            if (arp != null)
             {
-                if (ArpTable.Resolve(myInterface, arp))
+                if (arp.TargetProtocolAddress.Equals(myInterface.NetworkMask))
                 {
-                    RouterChange?.Invoke(this, null);
+                    if (ArpTable.Process(myInterface, arp))
+                    {
+                        RouterChange?.Invoke(this, null);
+                    }
                 }
+                else
+                {
+                    var route = Routes.Resolve(arp.TargetProtocolAddress);
+
+                    if (route == null) return;
+                    
+                    if (ArpTable.Process(route.Interface, arp))
+                    {
+                        RouterChange?.Invoke(this, null);
+                    }
+                }
+
                 return;
             }
 
@@ -62,40 +74,26 @@ namespace BinksRouter.Network
                 {
                     CurrentApp.Logging.Debug("Mesa called Jar Jar Binks, mesa your humble servant! (Received  IP packet)");
                 }
-                else if (myInterface.OnSameNetwork(ip.DestinationAddress))
-                {
-                    var destinationMac = ArpResolve(ip.DestinationAddress);
-                    if (destinationMac != null)
-                    {
-                        myInterface.Send(new EthernetPacket(myInterface.MacAddress, destinationMac, eth.Type)
-                        {
-                            PayloadPacket = ip
-                        });
-                    }
-                }
                 else
                 {
-                    // TODO: routing
+                    var route = Routes.Resolve(ip.DestinationAddress);
+
+                    if (route != null)
+                    {
+                        if (ArpTable.TryGetValue(ip.DestinationAddress, out var record))
+                        {
+                            route.Interface.Send(new EthernetPacket(route.Interface.MacAddress, record.MacAddress, eth.Type)
+                            {
+                                PayloadPacket = ip
+                            });
+                        }
+                        else
+                        {
+                            ArpTable.Request(route.Interface, ip.DestinationAddress);
+                        }
+                    }
                 }
-
-                return;
             }
-        }
-
-        [CanBeNull]
-        private PhysicalAddress ArpResolve(IPAddress ipAddress, Interface myInterface)
-        {
-            // TODO: ProxyARP
-            if (ArpTable.ContainsKey(ipAddress))
-            {
-                return ArpTable[ipAddress].MacAddress;
-            }
-            else if (myInterface.OnSameNetwork(ipAddress))
-            {
-
-            }
-
-            return null;
         }
 
         public void Stop()
@@ -122,12 +120,21 @@ namespace BinksRouter.Network
                
                 if (myInterface.IsActive)
                 {
-                    Routes.Add(new Route(Route.RouteType.Connected)
+                    var route = new Route(Route.RouteType.Connected)
                     {
                         Interface = myInterface,
                         NetworkId = myInterface.NetworkAddress,
                         NetworkMask = myInterface.NetworkMask
-                    });
+                    };
+                    
+                    Routes.Add(route);
+
+                    if (route.NetworkId != null && route.Interface != null)
+                    {
+                        ArpTable[route.NetworkId] = new ArpRecord(route.NetworkId, myInterface.MacAddress, true);
+                    }
+
+
                     RouterChange?.Invoke(this, null);
                 }
             }
