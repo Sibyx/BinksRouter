@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="BinksRouter" 
         Height="450" 
-        Width="900"
+        Width="950"
         WindowStartupLocation="CenterScreen"
         >
     <Grid>
@@ -91,7 +91,8 @@
                     </DataGrid.RowStyle>
 
                     <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Header="Active" Binding="{Binding Path=IsActive, Mode=OneWay}" Width="10*"/>
+                        <DataGridCheckBoxColumn Header="Active" Binding="{Binding Path=IsActive, Mode=OneWay}" Width="13*"/>
+                        <DataGridCheckBoxColumn Header="RIP" Binding="{Binding Path=RipEnabled, Mode=OneWay}" Width="7*"/>
                         <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name, Mode=OneWay}" Width="42*"/>
                         <DataGridTextColumn Header="IP Address"  Binding="{Binding Path=NetworkAddress, Mode=OneWay}" Width="24*"/>
                         <DataGridTextColumn Header="Mask"  Binding="{Binding Path=NetworkMask, Mode=OneWay}" Width="24*"/>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BinksRouter.UI"
         mc:Ignorable="d"
         Title="Interface Configuration" 
-        Height="230" 
+        Height="240" 
         Width="300"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -25,10 +25,17 @@
 
             <CheckBox
                 Name="IsActiveBox"
-                Margin="0,0,0,10"
                 IsThreeState="False"
             >
                 Active
+            </CheckBox>
+
+            <CheckBox
+                Name="RipEnabledBox"
+                Margin="0,0,0,10"
+                IsThreeState="False"
+            >
+                RIPv2
             </CheckBox>
 
 

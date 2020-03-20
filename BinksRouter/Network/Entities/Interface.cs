@@ -16,6 +16,7 @@ namespace BinksRouter.Network.Entities
         #region Private properties
 
         private bool _isActive;
+        private bool _ripEnabled = false;
         private string _name;
         [CanBeNull] private IPAddress _networkAddress;
         [CanBeNull] private IPAddress _networkMask;
@@ -91,6 +92,16 @@ namespace BinksRouter.Network.Entities
         }
 
         public PhysicalAddress MacAddress => _captureDevice.MacAddress;
+
+        public bool RipEnabled
+        {
+            get => _ripEnabled;
+            set
+            {
+                _ripEnabled = value;
+                NotifyPropertyChanged(nameof(RipEnabled));
+            }
+        }
 
         #endregion
 

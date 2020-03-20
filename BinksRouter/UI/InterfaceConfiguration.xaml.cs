@@ -28,6 +28,7 @@ namespace BinksRouter.UI
             }
 
             IsActiveBox.IsChecked = _interface.IsActive;
+            RipEnabledBox.IsChecked = _interface.RipEnabled;
         }
 
         private static void InlineTry(Action action)
@@ -47,6 +48,7 @@ namespace BinksRouter.UI
             InlineTry(() => _interface.NetworkAddress = IPAddress.Parse(IpAddressBox.Text));
             InlineTry(() => _interface.NetworkMask = IPAddress.Parse(MaskBox.Text));
             if (IsActiveBox?.IsChecked != null) _interface.IsActive = (bool) IsActiveBox?.IsChecked;
+            if (RipEnabledBox?.IsChecked != null) _interface.RipEnabled = (bool) RipEnabledBox.IsChecked;
             Close();
         }
     }
