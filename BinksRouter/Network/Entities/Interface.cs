@@ -16,7 +16,7 @@ namespace BinksRouter.Network.Entities
         #region Private properties
 
         private bool _isActive;
-        private bool _ripEnabled = false;
+        private bool _ripEnabled;
         private string _name;
         [CanBeNull] private IPAddress _networkAddress;
         [CanBeNull] private IPAddress _networkMask;
@@ -132,15 +132,15 @@ namespace BinksRouter.Network.Entities
             }
         }
 
-        public bool OnSameNetwork(IPAddress ipAddress)
-        {
-            return true;
-        }
-
         [NotifyPropertyChangedInvocator]
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

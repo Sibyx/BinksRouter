@@ -148,7 +148,7 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Type, Converter={StaticResource EnumDescriptionConverter}}" Width="5*"/>
-                    <DataGridTextColumn Header="Network ID"  Binding="{Binding NetworkId}" Width="20*"/>
+                    <DataGridTextColumn Header="Network Address"  Binding="{Binding NetworkAddress}" Width="20*"/>
                     <DataGridTextColumn Header="Network Mask"  Binding="{Binding NetworkMask}" Width="20*"/>
                     <DataGridTextColumn Header="Next-hop"  Binding="{Binding NextHop}" Width="20*"/>
                     <DataGridTextColumn Header="Interface"  Binding="{Binding Interface.Name}" Width="35*"/>

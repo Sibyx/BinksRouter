@@ -102,9 +102,9 @@ namespace BinksRouter.UI
         {
             var route = new Route(Route.RouteType.Static)
             {
-                NetworkId = IPAddress.Any,
-                NetworkMask = IPAddress.Broadcast,
-                NextHop = IPAddress.Any
+                NetworkAddress = IPAddress.Parse("192.168.10.1"),
+                NetworkMask = IPAddress.Parse("255.255.255.0"),
+                NextHop = null
             };
             var routeDetailWindow = new RouteDetail(route);
             routeDetailWindow.ShowDialog();

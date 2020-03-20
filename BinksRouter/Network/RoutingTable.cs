@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using BinksRouter.Annotations;
@@ -18,7 +17,7 @@ namespace BinksRouter.Network
             // https://docs.microsoft.com/en-us/archive/blogs/knom/ip-address-calculations-with-c-subnetmasks-networks
             // http://www.xss.wz.sk/downloads/podsiete.pdf
             // http://www.ut.fei.stuba.sk/~halas/kis/zal%202012/IP%20adresy%20PDF.pdf
-            foreach (var route in this.Where(item => ipAddress.IsInSameSubnet(item.NetworkId, item.NetworkMask)))
+            foreach (var route in this.Where(item => ipAddress.IsInSameSubnet(item.NetworkAddress, item.NetworkMask)))
             {
                 if (bestRoute == null || bestRoute.NetworkMask.ToInt() > route.NetworkMask.ToInt())
                 {

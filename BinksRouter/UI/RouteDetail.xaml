@@ -35,7 +35,9 @@
             <TextBox Name="NextHopBox" Padding="5" Margin="0,0,0,5"/>
 
             <TextBlock Padding="5">Outgoing interface</TextBlock>
-            <TextBox Name="InterfaceBox" Padding="5" Margin="0,0,0,5" IsReadOnly="True"/>
+            <ComboBox Name="InterfaceComboBox" Padding="5" Margin="0,0,0,5">
+
+            </ComboBox>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">

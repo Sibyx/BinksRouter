@@ -25,7 +25,7 @@ namespace BinksRouter.Network.Entities
 
         #region Private properties
 
-        private IPAddress _networkId;
+        private IPAddress _networkAddress;
         private IPAddress _networkMask;
         [CanBeNull] private IPAddress _nextHop;
         [CanBeNull] private Interface _interface;
@@ -42,13 +42,13 @@ namespace BinksRouter.Network.Entities
 
         public RouteType Type { get; }
 
-        public IPAddress NetworkId
+        public IPAddress NetworkAddress
         {
-            get => _networkId;
+            get => _networkAddress;
             set
             {
-                _networkId = value;
-                NotifyPropertyChanged(nameof(NetworkId));
+                _networkAddress = value;
+                NotifyPropertyChanged(nameof(NetworkAddress));
             }
         }
 

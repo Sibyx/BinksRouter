@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using BinksRouter.Network.Entities;
@@ -11,16 +12,20 @@ namespace BinksRouter.UI
     public partial class RouteDetail
     {
         private readonly Route _route;
+        private static App CurrentApp => (App)Application.Current;
 
         public RouteDetail(Route @route)
         {
             InitializeComponent();
 
             RouteTypeBox.Text = route.Type.ToString();
-            IpAddressBox.Text = route.NetworkId.ToString();
+            IpAddressBox.Text = route.NetworkAddress.ToString();
             MaskBox.Text = route.NetworkMask.ToString();
             if (route.NextHop != null) NextHopBox.Text = route.NextHop.ToString();
-            if (route.Interface != null) InterfaceBox.Text = route.Interface.Name;
+
+            InterfaceComboBox.ItemsSource = CurrentApp.RouterInstance.Interfaces.Where(item => item.IsActive);
+            InterfaceComboBox.SelectedValue = route.Interface;
+            InterfaceComboBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
 
             _route = route;
         }
@@ -39,9 +44,19 @@ namespace BinksRouter.UI
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
-            InlineTry(() => _route.NetworkId = IPAddress.Parse(IpAddressBox.Text));
+            InlineTry(() => _route.NetworkAddress = IPAddress.Parse(IpAddressBox.Text));
             InlineTry(() => _route.NetworkMask = IPAddress.Parse(MaskBox.Text));
-            InlineTry(() => _route.NextHop = IPAddress.Parse(NextHopBox.Text));
+
+            if (NextHopBox.Text.Trim() != "")
+            {
+                InlineTry(() => _route.NextHop = IPAddress.Parse(NextHopBox.Text));
+            }
+            else
+            {
+                _route.NextHop = null;
+            }
+            
+            _route.Interface = (Interface) InterfaceComboBox.SelectedValue;
 
             Close();
         }

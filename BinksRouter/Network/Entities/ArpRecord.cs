@@ -15,7 +15,7 @@ namespace BinksRouter.Network.Entities
         private IPAddress _networkAddress;
         private PhysicalAddress _macAddress;
         private readonly object _arpLock = new object();
-        private readonly bool _isPermanent = false;
+        private readonly bool _isPermanent;
 
         #endregion
 

@@ -123,15 +123,15 @@ namespace BinksRouter.Network
                     var route = new Route(Route.RouteType.Connected)
                     {
                         Interface = myInterface,
-                        NetworkId = myInterface.NetworkAddress,
+                        NetworkAddress = myInterface.NetworkAddress,
                         NetworkMask = myInterface.NetworkMask
                     };
                     
                     Routes.Add(route);
 
-                    if (route.NetworkId != null && route.Interface != null)
+                    if (route.NetworkAddress != null && route.Interface != null)
                     {
-                        ArpTable[route.NetworkId] = new ArpRecord(route.NetworkId, myInterface.MacAddress, true);
+                        ArpTable[route.NetworkAddress] = new ArpRecord(route.NetworkAddress, myInterface.MacAddress, true);
                     }
 
 
