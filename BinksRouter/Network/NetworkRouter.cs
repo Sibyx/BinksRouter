@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Timers;
 using System.Windows;
 using BinksRouter.Network.Entities;
+using BinksRouter.Network.Protocols;
 using PacketDotNet;
 using SharpPcap.Npcap;
 
@@ -45,54 +46,22 @@ namespace BinksRouter.Network
             var arp = eth.Extract<ArpPacket>();
             if (arp != null)
             {
-                if (arp.TargetProtocolAddress.Equals(myInterface.NetworkMask))
-                {
-                    if (ArpTable.Process(myInterface, arp))
-                    {
-                        RouterChange?.Invoke(this, null);
-                    }
-                }
-                else
-                {
-                    var route = Routes.Resolve(arp.TargetProtocolAddress);
+                var protocol = new ArpProtocol(this, CurrentApp.Logging);
+                protocol.Process(myInterface, arp);
+                RouterChange?.Invoke(this, null);
+                return;
+            }
 
-                    if (route == null) return;
-                    
-                    if (ArpTable.Process(route.Interface, arp))
-                    {
-                        RouterChange?.Invoke(this, null);
-                    }
-                }
-
+            if (!eth.DestinationHardwareAddress.Equals(myInterface.MacAddress))
+            {
                 return;
             }
 
             var ip = eth.Extract<IPPacket>();
             if (ip != null)
             {
-                if (Equals(ip.DestinationAddress, myInterface.NetworkAddress))
-                {
-                    CurrentApp.Logging.Debug("Mesa called Jar Jar Binks, mesa your humble servant! (Received  IP packet)");
-                }
-                else
-                {
-                    var route = Routes.Resolve(ip.DestinationAddress);
-
-                    if (route != null)
-                    {
-                        if (ArpTable.TryGetValue(ip.DestinationAddress, out var record))
-                        {
-                            route.Interface.Send(new EthernetPacket(route.Interface.MacAddress, record.MacAddress, eth.Type)
-                            {
-                                PayloadPacket = ip
-                            });
-                        }
-                        else
-                        {
-                            ArpTable.Request(route.Interface, ip.DestinationAddress);
-                        }
-                    }
-                }
+                var protocol = new IpProtocol(this, CurrentApp.Logging);
+                protocol.Process(myInterface, ip);
             }
         }
 
@@ -115,7 +84,6 @@ namespace BinksRouter.Network
         {
             if (sender is Interface myInterface)
             {
-                // Routes.Remove(Routes.Single(route => route.Interface.Equals(myInterface)));
                 Routes.RemoveAll(record => record.Interface != null && record.Interface.Equals(myInterface));
                
                 if (myInterface.IsActive)

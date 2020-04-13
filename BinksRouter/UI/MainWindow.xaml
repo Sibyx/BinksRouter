@@ -41,12 +41,6 @@
             >
                 <fa:ImageAwesome Icon="Repeat" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
             </Button>
-
-            <Button Width="30" Name="ArpRequestButton" Click="SendArpRequestClick" Margin="5 0 0 0">
-                <fa:ImageAwesome Icon="PaperPlane" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
-            </Button>
-
-
         </StackPanel>
 
         <StackPanel 

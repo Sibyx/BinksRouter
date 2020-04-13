@@ -26,6 +26,7 @@ namespace BinksRouter.UI
             InterfaceComboBox.ItemsSource = CurrentApp.RouterInstance.Interfaces.Where(item => item.IsActive);
             InterfaceComboBox.SelectedValue = route.Interface;
             InterfaceComboBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
+            RemoveButton.IsEnabled = !route.Type.Equals(Route.RouteType.Connected);
 
             _route = route;
         }
@@ -63,7 +64,8 @@ namespace BinksRouter.UI
 
         private void RemoveClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            CurrentApp.RouterInstance.Routes.Remove(_route);
+            Close();
         }
     }
 }

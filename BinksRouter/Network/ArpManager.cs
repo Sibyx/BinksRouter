@@ -21,7 +21,7 @@ namespace BinksRouter.Network
                     arp.SenderHardwareAddress,
                     arp.SenderProtocolAddress,
                     sender.MacAddress,
-                    sender.NetworkAddress
+                    arp.TargetProtocolAddress
                 );
 
                 var ethernetPacket = new EthernetPacket(sender.MacAddress, arp.SenderHardwareAddress, EthernetType.None)

@@ -14,7 +14,7 @@ namespace BinksRouter.Network.Entities
         private uint _timeToLive;
         private IPAddress _networkAddress;
         private PhysicalAddress _macAddress;
-        private readonly object _arpLock = new object();
+        private readonly object _lock = new object();
         private readonly bool _isPermanent;
 
         #endregion
@@ -71,7 +71,7 @@ namespace BinksRouter.Network.Entities
 
         public void Refresh(IPAddress ip)
         {
-            lock (_arpLock)
+            lock (_lock)
             {
                 NetworkAddress = ip;
                 TimeToLive = Properties.Settings.Default.ArpRecordLifetime;
@@ -85,7 +85,7 @@ namespace BinksRouter.Network.Entities
                 return false;
             }
 
-            lock (_arpLock)
+            lock (_lock)
             {
                 return !Convert.ToBoolean(--TimeToLive);
             }

@@ -1,5 +1,13 @@
 ﻿# CHANGELOG
 
+## 0.3.0 : 2020/04/13
+
+- **Feature**: ProxyARP
+- **Change**: RoutingTable is thread-safe now
+- **Feature**: Ability to remove static and RIP routes
+- **Note**: Removed ARP broadcast bullshit
+- **Chamge**: `Protocols` namespace introduced
+
 ## 0.2.0 : 2020/03/21
 
 - **Feature**: Static routing baby 🍸

@@ -9,19 +9,21 @@ namespace BinksRouter.Network
 {
     public class RoutingTable : List<Route>
     {
+        private readonly object _lock = new object();
+
         [CanBeNull]
         public Route Resolve(IPAddress ipAddress)
         {
             Route bestRoute = null;
 
-            // https://docs.microsoft.com/en-us/archive/blogs/knom/ip-address-calculations-with-c-subnetmasks-networks
-            // http://www.xss.wz.sk/downloads/podsiete.pdf
-            // http://www.ut.fei.stuba.sk/~halas/kis/zal%202012/IP%20adresy%20PDF.pdf
-            foreach (var route in this.Where(item => ipAddress.IsInSameSubnet(item.NetworkAddress, item.NetworkMask)))
+            lock (_lock)
             {
-                if (bestRoute == null || bestRoute.NetworkMask.ToInt() > route.NetworkMask.ToInt())
+                foreach (var route in this.Where(item => ipAddress.IsInSameSubnet(item.NetworkAddress, item.NetworkMask)))
                 {
-                    bestRoute = route;
+                    if (bestRoute == null || bestRoute.NetworkMask.ToInt() > route.NetworkMask.ToInt())
+                    {
+                        bestRoute = route;
+                    }
                 }
             }
 
@@ -35,9 +37,20 @@ namespace BinksRouter.Network
 
         public new void Add(Route item)
         {
-            if (!Contains(item))
+            lock (_lock)
             {
-                base.Add(item);
+                if (!Contains(item))
+                {
+                    base.Add(item);
+                }
+            }
+        }
+
+        public new bool Remove(Route item)
+        {
+            lock (_lock)
+            {
+                return base.Remove(item);
             }
         }
     }

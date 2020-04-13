@@ -19,9 +19,9 @@ namespace BinksRouter.UI
         public MainWindow()
         {
             InitializeComponent();
-            Interfaces.DataContext = CurrentApp.RouterInstance.Interfaces;
-            ArpTable.DataContext = CurrentApp.RouterInstance.ArpTable.Values.ToList();
-            RoutingTable.DataContext = CurrentApp.RouterInstance.Routes;
+            Interfaces.ItemsSource = CurrentApp.RouterInstance.Interfaces;
+            ArpTable.ItemsSource = CurrentApp.RouterInstance.ArpTable.Values.ToList();
+            RoutingTable.ItemsSource = CurrentApp.RouterInstance.Routes;
 
             CurrentApp.RouterInstance.RouterChange += RefreshArpTable;
         }
@@ -38,21 +38,16 @@ namespace BinksRouter.UI
                 var row = sender as DataGridRow;
                 var deviceConfigurationWindow = new InterfaceConfiguration(row?.DataContext as Interface);
                 deviceConfigurationWindow.ShowDialog();
-                RoutingTable.Items.Refresh();
             }
-        }
 
-        private void SendArpRequestClick(object sender, RoutedEventArgs e)
-        {
-            var sendArpRequestWindow = new SendArp(Interfaces.SelectedItems);
-            sendArpRequestWindow.ShowDialog();
+            RoutingTable.Items.Refresh();
         }
 
         private void RefreshArpTable(object sender, EventArgs eventArgs)
         {
             CurrentApp.Dispatcher?.Invoke(() =>
             {
-                ArpTable.DataContext = CurrentApp.RouterInstance.ArpTable.Values.ToList();
+                ArpTable.ItemsSource = CurrentApp.RouterInstance.ArpTable.Values.ToList();
             });
         }
 
@@ -72,6 +67,7 @@ namespace BinksRouter.UI
                 {
                     var routeDetailWindow = new RouteDetail(route);
                     routeDetailWindow.ShowDialog();
+                    RoutingTable.Items.Refresh();
                 }
             }
         }
@@ -112,8 +108,9 @@ namespace BinksRouter.UI
             if (!CurrentApp.RouterInstance.Routes.Contains(route))
             {
                 CurrentApp.RouterInstance.Routes.Add(route);
-                RoutingTable.Items.Refresh();
             }
+
+            RoutingTable.Items.Refresh();
         }
     }
 }

@@ -18,5 +18,11 @@ Simple .NET based software router for Windows implemented in C# using [WPF](http
 - For packet and device manipulation we use [sharppcap](https://github.com/chmorgan/sharppcap)
 - Syslog logging using [SyslogLogging](https://github.com/jchristn/LoggingModule) NuGet package
 
+## Resources
+
+- [IP Address Calculations with C# (Subnetmasks, Networks, …)](https://docs.microsoft.com/en-us/archive/blogs/knom/ip-address-calculations-with-c-subnetmasks-networks)
+- [Podsiete](http://www.xss.wz.sk/downloads/podsiete.pdf)
+- [IP Adresa, maska, podsiete a priklady](http://www.ut.fei.stuba.sk/~halas/kis/zal%202012/IP%20adresy%20PDF.pdf)
+
 ---
 With ❤️ and ☕️ Jakub Dubec (c) 2020
