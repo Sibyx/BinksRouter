@@ -41,7 +41,7 @@ namespace BinksRouter.Network.Entities
                 if (!_isActive && value)
                 {
                     _captureDevice.OnPacketArrival += PacketArrival;
-                    _captureDevice.Open(OpenFlags.Promiscuous | OpenFlags.NoCaptureLocal, 10);
+                    _captureDevice.Open(OpenFlags.Promiscuous, 10);
                     _captureDevice.StartCapture();
                 }
                 else if (_isActive && !value)

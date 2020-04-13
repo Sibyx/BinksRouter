@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using BinksRouter.Network.Entities;
@@ -20,6 +21,15 @@ namespace BinksRouter.Network.Protocols
             if (Equals(packet.DestinationAddress, receiver.NetworkAddress))
             {
                 _logger.Debug("Mesa called Jar Jar Binks, mesa your humble servant! (Received  IP packet)");
+            }
+            else if (packet.DestinationAddress.Equals(IPAddress.Parse("224.0.0.9")))
+            {
+                var udp = packet.Extract<UdpPacket>();
+                if (udp != null && udp.DestinationPort.Equals(520))
+                {
+                    var protocol = new Rip2Protocol(_router, _logger);
+                    protocol.Process(receiver, new RipPacket(udp.PayloadData));
+                }
             }
             else
             {

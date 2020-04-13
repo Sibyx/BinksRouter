@@ -115,11 +115,13 @@
     </ApplicationDefinition>
     <Compile Include="Extensions\IpAddressExtensions.cs" />
     <Compile Include="Network\ArpManager.cs" />
+    <Compile Include="Network\Entities\RipPacket.cs" />
     <Compile Include="Network\Entities\Route.cs" />
     <Compile Include="Network\Protocols\ArpProtocol.cs" />
     <Compile Include="Network\Protocols\GenericProtocol.cs" />
     <Compile Include="Network\Protocols\IcmpProtocol.cs" />
     <Compile Include="Network\Protocols\IpProtocol.cs" />
+    <Compile Include="Network\Protocols\Rip2Protocol.cs" />
     <Compile Include="Network\RoutingTable.cs" />
     <Compile Include="UI\Converters\CutePhysicalAddress.cs" />
     <Compile Include="UI\Converters\EnumDescriptionConverter.cs" />

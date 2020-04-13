@@ -1,5 +1,9 @@
 ﻿# CHANGELOG
 
+## 0.4.0 : 
+
+- **Feature**: RIPv2
+
 ## 0.3.0 : 2020/04/13
 
 - **Feature**: ProxyARP

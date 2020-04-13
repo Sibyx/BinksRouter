@@ -14,9 +14,15 @@ namespace BinksRouter.Extensions
             return network1.Equals(network2);
         }
 
-        public static int ToInt(this IPAddress ipAddress)
+        public static uint ToInt(this IPAddress ipAddress)
         {
-            return BitConverter.ToInt32(ipAddress.GetAddressBytes(), 0);
+            return BitConverter.ToUInt32(ipAddress.GetAddressBytes(), 0);
+        }
+
+        public static int ToShortMask(this IPAddress ipAddress)
+        {
+            var inverse = ipAddress.ToInt() & uint.MaxValue;
+            return (int) Math.Log(inverse, 2) + 1;
         }
     }
 }

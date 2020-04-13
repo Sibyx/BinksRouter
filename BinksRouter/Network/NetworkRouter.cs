@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net.NetworkInformation;
 using System.Timers;
 using System.Windows;
 using BinksRouter.Network.Entities;
@@ -52,7 +53,7 @@ namespace BinksRouter.Network
                 return;
             }
 
-            if (!eth.DestinationHardwareAddress.Equals(myInterface.MacAddress))
+            if (!eth.DestinationHardwareAddress.Equals(myInterface.MacAddress) && !eth.DestinationHardwareAddress.Equals(PhysicalAddress.Parse("01-00-5E-00-00-09")))
             {
                 return;
             }
