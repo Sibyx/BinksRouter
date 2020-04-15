@@ -1,8 +1,10 @@
-﻿# BinksRouter
+# BinksRouter
 
 Simple .NET based software router for Windows implemented in C# using [WPF](https://docs.microsoft.com/en-us/dotnet/framework/wpf/).
 
 ## Features
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSibyx%2FBinksRouter.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSibyx%2FBinksRouter?ref=badge_shield)
+
 
 - Static routing
 - [ProxyARP](https://networklessons.com/cisco/ccie-routing-switching/proxy-arp-explained) implementation
@@ -26,3 +28,7 @@ Simple .NET based software router for Windows implemented in C# using [WPF](http
 
 ---
 With ❤️ and ☕️ Jakub Dubec (c) 2020
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSibyx%2FBinksRouter.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FSibyx%2FBinksRouter?ref=badge_large)
