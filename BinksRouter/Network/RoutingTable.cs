@@ -40,26 +40,21 @@ namespace BinksRouter.Network
 
         public bool Learn(RipPacket.RipRecord ripRecord, Interface origin)
         {
-            try
-            {
-                var existingRoute = this.Single(item => item.NetworkAddress.Equals(ripRecord.IpAddress) && item.NetworkMask.Equals(ripRecord.Mask));
+            var existingRoute = this.FirstOrDefault(item => item.NetworkAddress.Equals(ripRecord.IpAddress) && item.NetworkMask.Equals(ripRecord.Mask));
 
-                if (existingRoute.Metric > ripRecord.Metric)
-                {
-                    Remove(existingRoute);
-                    Add(new Route(ripRecord, origin));
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (InvalidOperationException e)
+            if (existingRoute != null && existingRoute.Metric > ripRecord.Metric)
+            {
+                Remove(existingRoute);
+                Add(new Route(ripRecord, origin));
+                return true;
+            } 
+            else if (existingRoute == null)
             {
                 Add(new Route(ripRecord, origin));
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         public new void Add(Route item)

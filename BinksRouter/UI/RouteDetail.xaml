@@ -9,7 +9,7 @@
         Title="Route Detail" 
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Height="375" 
+        Height="500" 
         Width="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -38,6 +38,12 @@
             <ComboBox Name="InterfaceComboBox" Padding="5" Margin="0,0,0,5">
 
             </ComboBox>
+
+            <TextBlock Padding="5">Metric</TextBlock>
+            <TextBox Name="MetricBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True"/>
+
+            <TextBlock Padding="5">Origin</TextBlock>
+            <TextBox Name="OriginBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">

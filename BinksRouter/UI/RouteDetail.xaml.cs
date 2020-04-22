@@ -22,6 +22,8 @@ namespace BinksRouter.UI
             IpAddressBox.Text = route.NetworkAddress.ToString();
             MaskBox.Text = route.NetworkMask.ToString();
             if (route.NextHop != null) NextHopBox.Text = route.NextHop.ToString();
+            MetricBox.Text = route.Metric.ToString();
+            if (route.Origin != null) OriginBox.Text = route.Origin.ToString();
 
             InterfaceComboBox.ItemsSource = CurrentApp.RouterInstance.Interfaces.Where(item => item.IsActive);
             InterfaceComboBox.SelectedValue = route.Interface;

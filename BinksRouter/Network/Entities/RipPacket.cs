@@ -29,7 +29,7 @@ namespace BinksRouter.Network.Entities
                 IpAddress = new IPAddress(payload.Skip(4).Take(4).ToArray());
                 Mask = new IPAddress(payload.Skip(8).Take(4).ToArray());
                 NextHop = new IPAddress(payload.Skip(12).Take(4).ToArray());
-                Metric = BitConverter.ToUInt32(payload.Skip(16).Take(4).ToArray(), 0);
+                Metric = BitConverter.ToUInt32(payload.Skip(16).Take(4).Reverse().ToArray(), 0);
             }
 
             public override string ToString()

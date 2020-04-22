@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using BinksRouter.Annotations;
 using BinksRouter.Extensions;
 
@@ -118,6 +120,23 @@ namespace BinksRouter.Network.Entities
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public override bool Equals(Object obj)
+        {
+            if ((obj == null) || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var route = (Route) obj;
+            return GetHashCode() == route.GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = $"{NetworkAddress.ToInt()}:{NetworkMask.ToInt()}:{NextHop.ToInt()}:{Interface.Name}";
+            return hash.GetHashCode();
         }
     }
 }

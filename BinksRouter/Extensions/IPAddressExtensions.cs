@@ -16,7 +16,7 @@ namespace BinksRouter.Extensions
 
         public static uint ToInt(this IPAddress ipAddress)
         {
-            return BitConverter.ToUInt32(ipAddress.GetAddressBytes(), 0);
+            return ipAddress == null ? 0 : BitConverter.ToUInt32(ipAddress.GetAddressBytes(), 0);
         }
 
         public static int ToShortMask(this IPAddress ipAddress)
