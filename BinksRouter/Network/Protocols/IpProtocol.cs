@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 using BinksRouter.Network.Entities;
 using PacketDotNet;
 using SyslogLogging;
@@ -25,7 +20,7 @@ namespace BinksRouter.Network.Protocols
             else if (packet.DestinationAddress.Equals(IPAddress.Parse("224.0.0.9")))
             {
                 var udp = packet.Extract<UdpPacket>();
-                if (udp != null && udp.DestinationPort.Equals(520))
+                if (udp != null && udp.DestinationPort.Equals(520) && receiver.RipEnabled)
                 {
                     var protocol = new Rip2Protocol(_router, _logger);
                     protocol.Process(receiver, new RipPacket(udp.PayloadData));

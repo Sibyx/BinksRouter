@@ -2,6 +2,7 @@
 using System.Net;
 using System.Runtime.CompilerServices;
 using BinksRouter.Annotations;
+using BinksRouter.Extensions;
 
 namespace BinksRouter.Network.Entities
 {
@@ -82,11 +83,35 @@ namespace BinksRouter.Network.Entities
             }
         }
 
+        public readonly uint Metric;
+        [CanBeNull] public readonly Interface Origin;
+
         #endregion
 
         public Route(RouteType type)
         {
             Type = type;
+            Metric = 0;
+            Origin = null;
+        }
+
+        public Route(RipPacket.RipRecord record, Interface origin)
+        {
+            Type = RouteType.Rip;
+            NetworkAddress = record.IpAddress;
+            NetworkMask = record.Mask;
+            Metric = record.Metric;
+
+            if (record.NextHop.ToInt() == 0)
+            {
+                Interface = origin;
+            }
+            else
+            {
+                NextHop = record.NextHop;
+            }
+
+            Origin = origin;
         }
 
         [NotifyPropertyChangedInvocator]

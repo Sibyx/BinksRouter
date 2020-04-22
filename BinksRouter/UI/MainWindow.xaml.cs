@@ -21,7 +21,7 @@ namespace BinksRouter.UI
             InitializeComponent();
             Interfaces.ItemsSource = CurrentApp.RouterInstance.Interfaces;
             ArpTable.ItemsSource = CurrentApp.RouterInstance.ArpTable.Values.ToList();
-            RoutingTable.ItemsSource = CurrentApp.RouterInstance.Routes;
+            RoutingTable.DataContext = CurrentApp.RouterInstance.Routes;
 
             CurrentApp.RouterInstance.RouterChange += RefreshArpTable;
         }
@@ -39,8 +39,6 @@ namespace BinksRouter.UI
                 var deviceConfigurationWindow = new InterfaceConfiguration(row?.DataContext as Interface);
                 deviceConfigurationWindow.ShowDialog();
             }
-
-            RoutingTable.Items.Refresh();
         }
 
         private void RefreshArpTable(object sender, EventArgs eventArgs)
@@ -67,7 +65,6 @@ namespace BinksRouter.UI
                 {
                     var routeDetailWindow = new RouteDetail(route);
                     routeDetailWindow.ShowDialog();
-                    RoutingTable.Items.Refresh();
                 }
             }
         }
@@ -109,8 +106,6 @@ namespace BinksRouter.UI
             {
                 CurrentApp.RouterInstance.Routes.Add(route);
             }
-
-            RoutingTable.Items.Refresh();
         }
     }
 }

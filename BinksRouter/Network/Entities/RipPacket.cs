@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using BinksRouter.Extensions;
 
 namespace BinksRouter.Network.Entities
 {
-    class RipPacket
+    public class RipPacket
     {
         #region Subclasses
 
@@ -23,6 +21,7 @@ namespace BinksRouter.Network.Entities
             public readonly IPAddress IpAddress;
             public readonly IPAddress Mask;
             public readonly IPAddress NextHop;
+            public readonly uint Metric;
 
             public RipRecord(byte[] payload)
             {
@@ -30,11 +29,12 @@ namespace BinksRouter.Network.Entities
                 IpAddress = new IPAddress(payload.Skip(4).Take(4).ToArray());
                 Mask = new IPAddress(payload.Skip(8).Take(4).ToArray());
                 NextHop = new IPAddress(payload.Skip(12).Take(4).ToArray());
+                Metric = BitConverter.ToUInt32(payload.Skip(16).Take(4).ToArray(), 0);
             }
 
             public override string ToString()
             {
-                return $"{IpAddress}/{Mask.ToShortMask()} -> {NextHop}";
+                return $"{IpAddress}/{Mask.ToShortMask()} -> {NextHop} ({Metric})";
             }
         }
         #endregion

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BinksRouter.Network.Entities;
+﻿using BinksRouter.Network.Entities;
 using SyslogLogging;
 
 namespace BinksRouter.Network.Protocols
@@ -16,8 +11,17 @@ namespace BinksRouter.Network.Protocols
 
         public override void Process(Interface receiver, RipPacket packet)
         {
-            Console.WriteLine(packet.Records.First());
-            Console.WriteLine(packet.Records.Last());
+            if (packet.Command.Equals(RipPacket.RipCommand.Response))
+            {
+                foreach (var ripRecord in packet.Records)
+                {
+                    _router.Routes.Learn(ripRecord, receiver);
+                }
+            }
+            else if (packet.Command.Equals(RipPacket.RipCommand.Request))
+            {
+                
+            }
         }
     }
 }

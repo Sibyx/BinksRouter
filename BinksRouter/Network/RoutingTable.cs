@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
+using System.Windows;
 using BinksRouter.Annotations;
 using BinksRouter.Extensions;
 using BinksRouter.Network.Entities;
 
 namespace BinksRouter.Network
 {
-    public class RoutingTable : List<Route>
+    public class RoutingTable : ObservableCollection<Route>
     {
+
         private readonly object _lock = new object();
 
         [CanBeNull]
@@ -35,13 +38,40 @@ namespace BinksRouter.Network
             return bestRoute.Interface != null ? bestRoute : Resolve(bestRoute.NextHop);
         }
 
+        public bool Learn(RipPacket.RipRecord ripRecord, Interface origin)
+        {
+            try
+            {
+                var existingRoute = this.Single(item => item.NetworkAddress.Equals(ripRecord.IpAddress) && item.NetworkMask.Equals(ripRecord.Mask));
+
+                if (existingRoute.Metric > ripRecord.Metric)
+                {
+                    Remove(existingRoute);
+                    Add(new Route(ripRecord, origin));
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                Add(new Route(ripRecord, origin));
+            }
+
+            return true;
+        }
+
         public new void Add(Route item)
         {
             lock (_lock)
             {
                 if (!Contains(item))
                 {
-                    base.Add(item);
+                    Application.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        base.Add(item);
+                    });
                 }
             }
         }
@@ -50,7 +80,12 @@ namespace BinksRouter.Network
         {
             lock (_lock)
             {
-                return base.Remove(item);
+                var result = false;
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    result = base.Remove(item);
+                });
+                return result;
             }
         }
     }

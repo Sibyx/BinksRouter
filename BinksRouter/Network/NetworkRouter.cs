@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Timers;
 using System.Windows;
@@ -85,7 +86,17 @@ namespace BinksRouter.Network
         {
             if (sender is Interface myInterface)
             {
-                Routes.RemoveAll(record => record.Interface != null && record.Interface.Equals(myInterface));
+                try
+                {
+
+                    Routes.Remove(Routes.Single(
+                        record => record.Interface != null && record.Interface.Equals(myInterface))
+                    );
+                }
+                catch (InvalidOperationException e)
+                {
+                    
+                }
                
                 if (myInterface.IsActive)
                 {
