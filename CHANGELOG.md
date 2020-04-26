@@ -3,6 +3,7 @@
 ## 0.4.0 : 
 
 - **Feature**: RIPv2
+- **Feature**: Router configuration window
 
 ## 0.3.0 : 2020/04/13
 

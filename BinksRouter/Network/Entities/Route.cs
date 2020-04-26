@@ -141,14 +141,14 @@ namespace BinksRouter.Network.Entities
         public uint Metric
         {
             get => _metric;
-            private set
+            set
             {
                 _metric = value;
                 NotifyPropertyChanged(nameof(Metric));
             }
         }
 
-        [CanBeNull] public readonly Interface Origin;
+        [CanBeNull] public Interface Origin;
 
         public uint TimerValue
         {
@@ -216,6 +216,7 @@ namespace BinksRouter.Network.Entities
             if (Status.Equals(RouteStatus.Valid) && _timerValue > Properties.Settings.Default.RipInvalidTimer)
             {
                 Status = RouteStatus.Invalid;
+                Metric = 16;
             }
             else if (Status.Equals(RouteStatus.Invalid) && _timerValue > Properties.Settings.Default.RipFlushTimer)
             {

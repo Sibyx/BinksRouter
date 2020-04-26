@@ -40,7 +40,7 @@ namespace BinksRouter.Network.Entities
                 IpAddress = route.NetworkAddress;
                 Mask = route.NetworkMask;
                 NextHop = route.NextHop;
-                Metric = 1;
+                Metric = route.Metric + 1;
             }
 
             public override string ToString()

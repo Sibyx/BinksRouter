@@ -22,6 +22,7 @@ namespace BinksRouter.UI
 
             // Set data sources
             InterfaceBox.ItemsSource = CurrentApp.RouterInstance.Interfaces.Where(item => item.IsActive);
+            OriginBox.DataContext = route.Origin;
 
             // Disable readonly fields according to route type
             InterfaceBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);

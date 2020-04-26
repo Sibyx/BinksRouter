@@ -57,7 +57,7 @@
                 <TextBox Name="MetricBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding Metric, Mode=OneWay}"/>
 
                 <TextBlock Padding="5">Origin</TextBlock>
-                <TextBox Name="OriginBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding Origin, Mode=OneWay}"/>
+                <TextBox Name="OriginBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding Name, Mode=OneWay}"/>
 
                 <TextBlock Padding="5">Timer value</TextBlock>
                 <TextBox Name="TimerValueBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding TimerValue, Mode=OneWay}"/>
@@ -66,6 +66,7 @@
                     Name="RipEnabledBox"
                     Margin="0,0,0,10"
                     IsThreeState="False"
+                    IsChecked="{Binding RipEnabled, Mode=OneWay}"
                 >
                     RIP
                 </CheckBox>
