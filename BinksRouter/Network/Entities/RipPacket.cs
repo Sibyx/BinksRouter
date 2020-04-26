@@ -128,9 +128,16 @@ namespace BinksRouter.Network.Entities
 
     public class RipPacketFactory
     {
-        public static EthernetPacket CreateEthernetPacket(Interface sourceInterface, RipPacket ripPacket)
+        public static EthernetPacket CreateEthernetPacket(Interface sourceInterface, IEnumerable<Route> routes, IPAddress destination = null)
         {
-            var ipPacket = new IPv4Packet(sourceInterface.NetworkAddress, IPAddress.Parse("224.0.0.9"))
+            var ripPacket = new RipPacket(RipPacket.RipCommand.Response);
+
+            foreach (var route in routes.Where(item => (item.RipEnabled)))
+            {
+                ripPacket.Records.Add(new RipPacket.RipRecord(route));
+            }
+
+            var ipPacket = new IPv4Packet(sourceInterface.NetworkAddress, destination ?? IPAddress.Parse("224.0.0.9"))
             {
                 PayloadPacket = ripPacket
             };

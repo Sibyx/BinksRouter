@@ -1,4 +1,5 @@
-﻿using BinksRouter.Network.Entities;
+﻿using System.Linq;
+using BinksRouter.Network.Entities;
 using SyslogLogging;
 
 namespace BinksRouter.Network.Protocols
@@ -20,7 +21,7 @@ namespace BinksRouter.Network.Protocols
             }
             else if (packet.Command.Equals(RipPacket.RipCommand.Request))
             {
-                
+                receiver.Send(RipPacketFactory.CreateEthernetPacket(receiver, _router.Routes.Where(item => !Equals(item.Origin, receiver)), receiver.NetworkAddress));
             }
         }
     }

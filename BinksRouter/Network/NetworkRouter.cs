@@ -93,7 +93,7 @@ namespace BinksRouter.Network
         {
             foreach (var @interface in Interfaces.Where(item => (item.RipEnabled)))
             {
-                @interface.Send(RipPacketFactory.CreateEthernetPacket(@interface, Routes.ToPacket()));
+                @interface.Send(RipPacketFactory.CreateEthernetPacket(@interface, Routes.Where(item => !Equals(item.Origin, @interface))));
             }
         }
 
