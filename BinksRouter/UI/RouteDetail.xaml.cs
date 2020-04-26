@@ -17,28 +17,18 @@ namespace BinksRouter.UI
         public RouteDetail(Route @route)
         {
             InitializeComponent();
+            DataContext = route;
+            _route = route;
 
             // Set data sources
-            InterfaceComboBox.ItemsSource = CurrentApp.RouterInstance.Interfaces.Where(item => item.IsActive);
-
-            // Set input values
-            RouteTypeBox.Text = route.Type.ToString();
-            IpAddressBox.Text = route.NetworkAddress.ToString();
-            MaskBox.Text = route.NetworkMask.ToString();
-            MetricBox.Text = route.Metric.ToString();
-            NextHopBox.Text = route.NextHop?.ToString() ?? "";
-            OriginBox.Text = route.Origin?.ToString() ?? "";
-            RipEnabledBox.IsChecked = route.RipEnabled;
-            InterfaceComboBox.SelectedValue = route.Interface;
+            InterfaceBox.ItemsSource = CurrentApp.RouterInstance.Interfaces.Where(item => item.IsActive);
 
             // Disable readonly fields according to route type
-            InterfaceComboBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
-            MaskBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
+            InterfaceBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
+            NetworkMaskBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
             NextHopBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
-            IpAddressBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
+            NetworkAddressBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
             RemoveButton.IsEnabled = !route.Type.Equals(Route.RouteType.Connected);
-
-            _route = route;
         }
 
         private static void InlineTry(Action action)
@@ -55,8 +45,8 @@ namespace BinksRouter.UI
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
-            InlineTry(() => _route.NetworkAddress = IPAddress.Parse(IpAddressBox.Text));
-            InlineTry(() => _route.NetworkMask = IPAddress.Parse(MaskBox.Text));
+            InlineTry(() => _route.NetworkAddress = IPAddress.Parse(NetworkAddressBox.Text));
+            InlineTry(() => _route.NetworkMask = IPAddress.Parse(NetworkMaskBox.Text));
 
             if (NextHopBox.Text.Trim() != "")
             {
@@ -67,7 +57,7 @@ namespace BinksRouter.UI
                 _route.NextHop = null;
             }
             
-            _route.Interface = (Interface) InterfaceComboBox.SelectedValue;
+            _route.Interface = (Interface) InterfaceBox.SelectedValue;
             _route.RipEnabled = RipEnabledBox.IsChecked ?? false;
 
             if (!CurrentApp.RouterInstance.Routes.Contains(_route))

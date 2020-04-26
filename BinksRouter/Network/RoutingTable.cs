@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -65,8 +67,20 @@ namespace BinksRouter.Network
                 {
                     Application.Current.Dispatcher.Invoke((Action)delegate
                     {
+                        item.PropertyChanged += RouteChanged;
                         base.Add(item);
                     });
+                }
+            }
+        }
+
+        private void RouteChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender is Route route)
+            {
+                if (route.Status.Equals(Route.RouteStatus.Flush))
+                {
+                    Remove(route);
                 }
             }
         }

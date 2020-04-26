@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -98,7 +99,10 @@ namespace BinksRouter.Network
 
         private void SettingsChanged(object sender, PropertyChangedEventArgs e)
         {
-            _ripUpdate.Interval = Properties.Settings.Default.RipUpdateTimer * 1000;
+            if (e.PropertyName == nameof(Properties.Settings.Default.RipUpdateTimer))
+            {
+                _ripUpdate.Interval = Properties.Settings.Default.RipUpdateTimer * 1000;
+            }
         }
 
         private void InterfaceChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
