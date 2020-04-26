@@ -24,6 +24,7 @@ namespace BinksRouter.UI
             if (route.NextHop != null) NextHopBox.Text = route.NextHop.ToString();
             MetricBox.Text = route.Metric.ToString();
             if (route.Origin != null) OriginBox.Text = route.Origin.ToString();
+            RipEnabledBox.IsChecked = route.RipEnabled;
 
             InterfaceComboBox.ItemsSource = CurrentApp.RouterInstance.Interfaces.Where(item => item.IsActive);
             InterfaceComboBox.SelectedValue = route.Interface;
@@ -60,6 +61,7 @@ namespace BinksRouter.UI
             }
             
             _route.Interface = (Interface) InterfaceComboBox.SelectedValue;
+            _route.RipEnabled = RipEnabledBox.IsChecked ?? false;
 
             Close();
         }

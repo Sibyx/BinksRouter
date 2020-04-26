@@ -24,5 +24,23 @@ namespace BinksRouter.Extensions
             var inverse = ipAddress.ToInt() & uint.MaxValue;
             return (int) Math.Log(inverse, 2) + 1;
         }
+
+        public static IPAddress GetNetworkAddress(this IPAddress address, IPAddress subnetMask)
+        {
+            var ipAddressBytes = address.GetAddressBytes();
+            var subnetMaskBytes = subnetMask.GetAddressBytes();
+
+            if (ipAddressBytes.Length != subnetMaskBytes.Length)
+                throw new ArgumentException("Lengths of IP address and subnet mask do not match.");
+
+            var networkAddress = new byte[ipAddressBytes.Length];
+            
+            for (var i = 0; i < networkAddress.Length; i++)
+            {
+                networkAddress[i] = (byte)(ipAddressBytes[i] & (subnetMaskBytes[i]));
+            }
+            
+            return new IPAddress(networkAddress);
+        }
     }
 }

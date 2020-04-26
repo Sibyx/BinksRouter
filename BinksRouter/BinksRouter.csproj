@@ -122,6 +122,7 @@
     <Compile Include="Network\Protocols\IcmpProtocol.cs" />
     <Compile Include="Network\Protocols\IpProtocol.cs" />
     <Compile Include="Network\Protocols\Rip2Protocol.cs" />
+    <Compile Include="Network\RipThread.cs" />
     <Compile Include="Network\RoutingTable.cs" />
     <Compile Include="UI\Converters\CutePhysicalAddress.cs" />
     <Compile Include="UI\Converters\EnumDescriptionConverter.cs" />

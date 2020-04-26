@@ -32,6 +32,7 @@ namespace BinksRouter.Network.Entities
         private IPAddress _networkMask;
         [CanBeNull] private IPAddress _nextHop;
         [CanBeNull] private Interface _interface;
+        private bool _ripEnabled = false;
 
         #endregion
 
@@ -85,6 +86,16 @@ namespace BinksRouter.Network.Entities
             }
         }
 
+        public bool RipEnabled
+        {
+            get => _ripEnabled;
+            set
+            {
+                _ripEnabled = value;
+                NotifyPropertyChanged(nameof(RipEnabled));
+            }
+        }
+
         public readonly uint Metric;
         [CanBeNull] public readonly Interface Origin;
 
@@ -122,7 +133,7 @@ namespace BinksRouter.Network.Entities
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             if ((obj == null) || GetType() != obj.GetType())
             {
@@ -135,7 +146,7 @@ namespace BinksRouter.Network.Entities
 
         public override int GetHashCode()
         {
-            var hash = $"{NetworkAddress.ToInt()}:{NetworkMask.ToInt()}:{NextHop.ToInt()}:{Interface.Name}";
+            var hash = $"{NetworkAddress.ToInt()}:{NetworkMask.ToInt()}:{NextHop.ToInt()}:{Interface?.Name ?? ""}";
             return hash.GetHashCode();
         }
     }

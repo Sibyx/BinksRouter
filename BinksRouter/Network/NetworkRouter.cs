@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Timers;
 using System.Windows;
+using BinksRouter.Extensions;
 using BinksRouter.Network.Entities;
 using BinksRouter.Network.Protocols;
 using PacketDotNet;
@@ -21,6 +22,7 @@ namespace BinksRouter.Network
         private static App CurrentApp => (App)Application.Current;
 
         private readonly Timer _clock = new Timer(Properties.Settings.Default.ClockRate);
+        private readonly RipThread _rip;
 
         public NetworkRouter()
         {
@@ -39,6 +41,9 @@ namespace BinksRouter.Network
             _clock.Elapsed += ClockTickEvent;
             _clock.Elapsed += ArpTable.ClockTickEvent;
             _clock.Start();
+
+            _rip = new RipThread(this);
+            _rip.Start();
         }
 
         private void PacketArrival(object sender, EthernetPacket eth)
@@ -70,6 +75,7 @@ namespace BinksRouter.Network
         public void Stop()
         {
             _clock.Stop();
+            _rip.Stop();
 
             foreach (var device in Interfaces)
             {
@@ -103,7 +109,7 @@ namespace BinksRouter.Network
                     var route = new Route(Route.RouteType.Connected)
                     {
                         Interface = myInterface,
-                        NetworkAddress = myInterface.NetworkAddress,
+                        NetworkAddress = myInterface.NetworkAddress.GetNetworkAddress(myInterface.NetworkMask),
                         NetworkMask = myInterface.NetworkMask
                     };
                     
@@ -113,7 +119,6 @@ namespace BinksRouter.Network
                     {
                         ArpTable[route.NetworkAddress] = new ArpRecord(route.NetworkAddress, myInterface.MacAddress, true);
                     }
-
 
                     RouterChange?.Invoke(this, null);
                 }

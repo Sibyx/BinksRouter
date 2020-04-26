@@ -9,7 +9,7 @@
         Title="Route Detail" 
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Height="500" 
+        Height="520" 
         Width="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -44,6 +44,14 @@
 
             <TextBlock Padding="5">Origin</TextBlock>
             <TextBox Name="OriginBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True"/>
+
+            <CheckBox
+                Name="RipEnabledBox"
+                Margin="0,0,0,10"
+                IsThreeState="False"
+            >
+                RIP
+            </CheckBox>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">

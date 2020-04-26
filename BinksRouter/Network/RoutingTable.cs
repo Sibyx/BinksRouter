@@ -83,5 +83,17 @@ namespace BinksRouter.Network
                 return result;
             }
         }
+
+        public RipPacket ToPacket()
+        {
+            var packet = new RipPacket(RipPacket.RipCommand.Response);
+
+            foreach (var route in this.Where(item => (item.RipEnabled)))
+            {
+                packet.Records.Add(new RipPacket.RipRecord(route));
+            }
+
+            return packet;
+        }
     }
 }
