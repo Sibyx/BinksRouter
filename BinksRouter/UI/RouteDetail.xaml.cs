@@ -18,17 +18,24 @@ namespace BinksRouter.UI
         {
             InitializeComponent();
 
+            // Set data sources
+            InterfaceComboBox.ItemsSource = CurrentApp.RouterInstance.Interfaces.Where(item => item.IsActive);
+
+            // Set input values
             RouteTypeBox.Text = route.Type.ToString();
             IpAddressBox.Text = route.NetworkAddress.ToString();
             MaskBox.Text = route.NetworkMask.ToString();
-            if (route.NextHop != null) NextHopBox.Text = route.NextHop.ToString();
             MetricBox.Text = route.Metric.ToString();
-            if (route.Origin != null) OriginBox.Text = route.Origin.ToString();
+            NextHopBox.Text = route.NextHop?.ToString() ?? "";
+            OriginBox.Text = route.Origin?.ToString() ?? "";
             RipEnabledBox.IsChecked = route.RipEnabled;
-
-            InterfaceComboBox.ItemsSource = CurrentApp.RouterInstance.Interfaces.Where(item => item.IsActive);
             InterfaceComboBox.SelectedValue = route.Interface;
+
+            // Disable readonly fields according to route type
             InterfaceComboBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
+            MaskBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
+            NextHopBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
+            IpAddressBox.IsEnabled = route.Type.Equals(Route.RouteType.Static);
             RemoveButton.IsEnabled = !route.Type.Equals(Route.RouteType.Connected);
 
             _route = route;
@@ -62,6 +69,11 @@ namespace BinksRouter.UI
             
             _route.Interface = (Interface) InterfaceComboBox.SelectedValue;
             _route.RipEnabled = RipEnabledBox.IsChecked ?? false;
+
+            if (!CurrentApp.RouterInstance.Routes.Contains(_route))
+            {
+                CurrentApp.RouterInstance.Routes.Add(_route);
+            }
 
             Close();
         }

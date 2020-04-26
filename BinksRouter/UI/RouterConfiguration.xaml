@@ -1,0 +1,70 @@
+﻿<Window x:Class="BinksRouter.UI.RouterConfiguration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BinksRouter.UI"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="Router Configuration" 
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Height="350" 
+        Width="600">
+        
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Grid Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Column="0" Header="General" Padding="5">
+                <StackPanel 
+                    Orientation = "Vertical">
+
+                    <TextBlock Padding="5">Hostname</TextBlock>
+                    <TextBox Name="HostnameBox" Padding="5" Margin="0,0,0,5"/>
+
+                    <TextBlock Padding="5">ARP record lifetime (seconds)</TextBlock>
+                    <TextBox Name="ArpRecordLifetimeBox" Padding="5"/>
+
+                    <TextBlock Padding="5">Syslog IP</TextBlock>
+                    <TextBox Name="SyslogIpBox" Padding="5" Margin="0,0,0,5"/>
+
+                    <TextBlock Padding="5">Syslog port</TextBlock>
+                    <TextBox Name="SyslogPortBox" Padding="5" Margin="0,0,0,5" />
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Header="RIP Timers" Padding="5">
+                <StackPanel 
+                    Orientation = "Vertical">
+
+                    <TextBlock Padding="5">Update (seconds)</TextBlock>
+                    <TextBox Name="RipUpdateTimerBox" Padding="5" Margin="0,0,0,5"  PreviewTextInput="IsNumeric"/>
+
+                    <TextBlock Padding="5">Invalid (seconds)</TextBlock>
+                    <TextBox Name="RipInvalidTimerBox" Padding="5" Margin="0,0,0,5" PreviewTextInput="IsNumeric"/>
+
+                    <TextBlock Padding="5">Flush (seconds)</TextBlock>
+                    <TextBox Name="RipFlushTimerBox" Padding="5" Margin="0,0,0,5" PreviewTextInput="IsNumeric"/>
+
+                    <TextBlock Padding="5">Holddown (seconds)</TextBlock>
+                    <TextBox Name="RipHolddownTimerBox" Padding="5" Margin="0,0,0,5" PreviewTextInput="IsNumeric"/>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Width="30" Name="SaveButton" Click="SaveClick">
+                <fa:ImageAwesome Icon="Save" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

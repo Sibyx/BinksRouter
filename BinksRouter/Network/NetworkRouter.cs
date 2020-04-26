@@ -21,8 +21,8 @@ namespace BinksRouter.Network
         public event EventHandler<EventArgs> RouterChange;
         private static App CurrentApp => (App)Application.Current;
 
-        private readonly Timer _clock = new Timer(Properties.Settings.Default.ClockRate);
-        private readonly RipThread _rip;
+        private readonly Timer _clock = new Timer(1000); // 1s
+        private readonly Timer _ripUpdate = new Timer(Properties.Settings.Default.RipUpdateTimer * 1000); // RipUpdateTimer is in seconds
 
         public NetworkRouter()
         {
@@ -37,13 +37,14 @@ namespace BinksRouter.Network
                     Interfaces.Add(networkInterface);
                 }
             }
-
             _clock.Elapsed += ClockTickEvent;
             _clock.Elapsed += ArpTable.ClockTickEvent;
             _clock.Start();
 
-            _rip = new RipThread(this);
-            _rip.Start();
+            _ripUpdate.Elapsed += RipUpdateEvent;
+            _ripUpdate.Start();
+
+            Properties.Settings.Default.PropertyChanged += SettingsChanged;
         }
 
         private void PacketArrival(object sender, EthernetPacket eth)
@@ -75,7 +76,6 @@ namespace BinksRouter.Network
         public void Stop()
         {
             _clock.Stop();
-            _rip.Stop();
 
             foreach (var device in Interfaces)
             {
@@ -86,6 +86,19 @@ namespace BinksRouter.Network
         private void ClockTickEvent(object source, ElapsedEventArgs e)
         {
             RouterChange?.Invoke(this, null);
+        }
+
+        private void RipUpdateEvent(object source, ElapsedEventArgs e)
+        {
+            foreach (var @interface in Interfaces.Where(item => (item.RipEnabled)))
+            {
+                @interface.Send(RipPacketFactory.CreateEthernetPacket(@interface, Routes.ToPacket()));
+            }
+        }
+
+        private void SettingsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            _ripUpdate.Interval = Properties.Settings.Default.RipUpdateTimer * 1000;
         }
 
         private void InterfaceChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -115,9 +128,9 @@ namespace BinksRouter.Network
                     
                     Routes.Add(route);
 
-                    if (route.NetworkAddress != null && route.Interface != null)
+                    if (myInterface.NetworkAddress != null)
                     {
-                        ArpTable[route.NetworkAddress] = new ArpRecord(route.NetworkAddress, myInterface.MacAddress, true);
+                        ArpTable[myInterface.NetworkAddress] = new ArpRecord(myInterface.NetworkAddress, myInterface.MacAddress, true);
                     }
 
                     RouterChange?.Invoke(this, null);

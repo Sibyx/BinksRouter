@@ -28,7 +28,8 @@ namespace BinksRouter.UI
 
         private void SettingsClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var window = new RouterConfiguration();
+            window.ShowDialog();
         }
 
         private void InterfaceDoubleClick(object sender, MouseButtonEventArgs e)
@@ -101,11 +102,6 @@ namespace BinksRouter.UI
             };
             var routeDetailWindow = new RouteDetail(route);
             routeDetailWindow.ShowDialog();
-
-            if (!CurrentApp.RouterInstance.Routes.Contains(route))
-            {
-                CurrentApp.RouterInstance.Routes.Add(route);
-            }
         }
     }
 }

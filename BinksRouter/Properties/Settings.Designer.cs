@@ -12,7 +12,7 @@ namespace BinksRouter.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -37,18 +37,6 @@ namespace BinksRouter.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public double ClockRate {
-            get {
-                return ((double)(this["ClockRate"]));
-            }
-            set {
-                this["ClockRate"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.2.20")]
         public string SyslogIp {
             get {
@@ -62,9 +50,9 @@ namespace BinksRouter.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("514")]
-        public int SyslogPort {
+        public ushort SyslogPort {
             get {
-                return ((int)(this["SyslogPort"]));
+                return ((ushort)(this["SyslogPort"]));
             }
             set {
                 this["SyslogPort"] = value;
@@ -80,6 +68,54 @@ namespace BinksRouter.Properties {
             }
             set {
                 this["Hostname"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public ushort RipUpdateTimer {
+            get {
+                return ((ushort)(this["RipUpdateTimer"]));
+            }
+            set {
+                this["RipUpdateTimer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
+        public ushort RipInvalidTimer {
+            get {
+                return ((ushort)(this["RipInvalidTimer"]));
+            }
+            set {
+                this["RipInvalidTimer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
+        public ushort RipHolddownTimer {
+            get {
+                return ((ushort)(this["RipHolddownTimer"]));
+            }
+            set {
+                this["RipHolddownTimer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("240")]
+        public ushort RipFlushTimer {
+            get {
+                return ((ushort)(this["RipFlushTimer"]));
+            }
+            set {
+                this["RipFlushTimer"] = value;
             }
         }
     }

@@ -122,12 +122,14 @@
     <Compile Include="Network\Protocols\IcmpProtocol.cs" />
     <Compile Include="Network\Protocols\IpProtocol.cs" />
     <Compile Include="Network\Protocols\Rip2Protocol.cs" />
-    <Compile Include="Network\RipThread.cs" />
     <Compile Include="Network\RoutingTable.cs" />
     <Compile Include="UI\Converters\CutePhysicalAddress.cs" />
     <Compile Include="UI\Converters\EnumDescriptionConverter.cs" />
     <Compile Include="UI\RouteDetail.xaml.cs">
       <DependentUpon>RouteDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\RouterConfiguration.xaml.cs">
+      <DependentUpon>RouterConfiguration.xaml</DependentUpon>
     </Compile>
     <Page Include="UI\InterfaceConfiguration.xaml">
       <SubType>Designer</SubType>
@@ -153,6 +155,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\RouteDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\RouterConfiguration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

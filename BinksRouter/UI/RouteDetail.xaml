@@ -9,50 +9,62 @@
         Title="Route Detail" 
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Height="520" 
-        Width="300">
+        Height="400" 
+        Width="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel 
-            Grid.Row="0"
-            Orientation = "Vertical"
-            Margin="5">
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-            <TextBlock Padding="5">Route type</TextBlock>
-            <TextBox Name="RouteTypeBox" Padding="5" IsReadOnly="True"/>
+            <StackPanel 
+                Grid.Column="0"
+                Orientation = "Vertical"
+                Margin="5">
 
-            <TextBlock Padding="5">IP address</TextBlock>
-            <TextBox Name="IpAddressBox" Padding="5"/>
+                <TextBlock Padding="5">Route type</TextBlock>
+                <TextBox Name="RouteTypeBox" Padding="5" IsReadOnly="True"/>
 
-            <TextBlock Padding="5">Mask</TextBlock>
-            <TextBox Name="MaskBox" Padding="5" Margin="0,0,0,5"/>
+                <TextBlock Padding="5">IP address</TextBlock>
+                <TextBox Name="IpAddressBox" Padding="5"/>
 
-            <TextBlock Padding="5">Next-Hop</TextBlock>
-            <TextBox Name="NextHopBox" Padding="5" Margin="0,0,0,5"/>
+                <TextBlock Padding="5">Mask</TextBlock>
+                <TextBox Name="MaskBox" Padding="5" Margin="0,0,0,5"/>
 
-            <TextBlock Padding="5">Outgoing interface</TextBlock>
-            <ComboBox Name="InterfaceComboBox" Padding="5" Margin="0,0,0,5">
+                <TextBlock Padding="5">Next-Hop</TextBlock>
+                <TextBox Name="NextHopBox" Padding="5" Margin="0,0,0,5"/>
 
-            </ComboBox>
+                <TextBlock Padding="5">Outgoing interface</TextBlock>
+                <ComboBox Name="InterfaceComboBox" Padding="5" Margin="0,0,0,5">
 
-            <TextBlock Padding="5">Metric</TextBlock>
-            <TextBox Name="MetricBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True"/>
+                </ComboBox>
+            </StackPanel>
 
-            <TextBlock Padding="5">Origin</TextBlock>
-            <TextBox Name="OriginBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True"/>
+            <StackPanel 
+                Grid.Column="1"
+                Orientation = "Vertical"
+                Margin="5">
+                <TextBlock Padding="5">Metric</TextBlock>
+                <TextBox Name="MetricBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True"/>
 
-            <CheckBox
-                Name="RipEnabledBox"
-                Margin="0,0,0,10"
-                IsThreeState="False"
-            >
-                RIP
-            </CheckBox>
-        </StackPanel>
+                <TextBlock Padding="5">Origin</TextBlock>
+                <TextBox Name="OriginBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True"/>
+
+                <CheckBox
+                    Name="RipEnabledBox"
+                    Margin="0,0,0,10"
+                    IsThreeState="False"
+                >
+                    RIP
+                </CheckBox>
+            </StackPanel>
+        </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Width="30" Name="RemoveButton" Click="RemoveClick" Margin="0 0 5 0">
@@ -62,7 +74,5 @@
                 <fa:ImageAwesome Icon="Save" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
             </Button>
         </StackPanel>
-
-
     </Grid>
 </Window>

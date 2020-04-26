@@ -5,17 +5,26 @@
     <Setting Name="ArpRecordLifetime" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">1500</Value>
     </Setting>
-    <Setting Name="ClockRate" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1000</Value>
-    </Setting>
     <Setting Name="SyslogIp" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.2.20</Value>
     </Setting>
-    <Setting Name="SyslogPort" Type="System.Int32" Scope="User">
+    <Setting Name="SyslogPort" Type="System.UInt16" Scope="User">
       <Value Profile="(Default)">514</Value>
     </Setting>
     <Setting Name="Hostname" Type="System.String" Scope="User">
       <Value Profile="(Default)">binksrouter</Value>
+    </Setting>
+    <Setting Name="RipUpdateTimer" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="RipInvalidTimer" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">180</Value>
+    </Setting>
+    <Setting Name="RipHolddownTimer" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">180</Value>
+    </Setting>
+    <Setting Name="RipFlushTimer" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">240</Value>
     </Setting>
   </Settings>
 </SettingsFile>

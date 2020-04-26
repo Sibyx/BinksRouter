@@ -24,6 +24,21 @@ namespace BinksRouter.Network.Entities
             Rip
         }
 
+        public enum RouteStatus
+        {
+            [Description("Valid")]
+            Valid,
+
+            [Description("Invalid")]
+            Invalid,
+
+            [Description("Locked")]
+            Locked,
+
+            [Description("Flush")]
+            Flush
+        }
+
         #endregion
 
         #region Private properties
@@ -33,6 +48,7 @@ namespace BinksRouter.Network.Entities
         [CanBeNull] private IPAddress _nextHop;
         [CanBeNull] private Interface _interface;
         private bool _ripEnabled = false;
+        private RouteStatus _status = RouteStatus.Valid;
 
         #endregion
 
@@ -93,6 +109,16 @@ namespace BinksRouter.Network.Entities
             {
                 _ripEnabled = value;
                 NotifyPropertyChanged(nameof(RipEnabled));
+            }
+        }
+
+        private RouteStatus Status
+        {
+            get => _status;
+            set
+            {
+                _status = value;
+                NotifyPropertyChanged(nameof(Status));
             }
         }
 
