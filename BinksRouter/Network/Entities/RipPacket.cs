@@ -126,7 +126,7 @@ namespace BinksRouter.Network.Entities
         }
     }
 
-    public class RipPacketFactory
+    public static class RipPacketFactory
     {
         public static EthernetPacket CreateEthernetPacket(Interface sourceInterface, IEnumerable<Route> routes, IPAddress destination = null)
         {

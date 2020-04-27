@@ -133,7 +133,10 @@ namespace BinksRouter.Network.Entities
             set
             {
                 _status = value;
-                _timerValue = 0;
+                if (_status.Equals(RouteStatus.Valid))
+                {
+                    _timerValue = 0;
+                }
                 NotifyPropertyChanged(nameof(Status));
             }
         }
@@ -189,7 +192,7 @@ namespace BinksRouter.Network.Entities
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -213,21 +216,30 @@ namespace BinksRouter.Network.Entities
 
         private void TimerEvent(object source, ElapsedEventArgs e)
         {
-            if (Status.Equals(RouteStatus.Valid) && _timerValue > Properties.Settings.Default.RipInvalidTimer)
+            if (Status != RouteStatus.Invalid && Metric > 15)
+            {
+                _timerValue = Properties.Settings.Default.RipInvalidTimer;
+            }
+
+            if (_timerValue > Properties.Settings.Default.RipInvalidTimer)
             {
                 Status = RouteStatus.Invalid;
                 Metric = 16;
             }
-            else if (Status.Equals(RouteStatus.Invalid) && _timerValue > Properties.Settings.Default.RipFlushTimer)
+            
+            if (_timerValue > Properties.Settings.Default.RipFlushTimer)
             {
                 Status = RouteStatus.Flush;
+                _timer.Stop();
             }
+            
             else if (Status.Equals(RouteStatus.Locked) && _timerValue > Properties.Settings.Default.RipHolddownTimer)
             {
                 Status = RouteStatus.Valid;
             }
 
-            TimerValue++;
+            _timerValue++;
+            NotifyPropertyChanged(nameof(TimerValue));
         }
     }
 }

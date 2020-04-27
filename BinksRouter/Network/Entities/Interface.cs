@@ -41,7 +41,7 @@ namespace BinksRouter.Network.Entities
                 if (!_isActive && value)
                 {
                     _captureDevice.OnPacketArrival += PacketArrival;
-                    _captureDevice.Open(OpenFlags.Promiscuous | OpenFlags.NoCaptureLocal, 10);
+                    _captureDevice.Open(OpenFlags.NoCaptureLocal, 10);
                     _captureDevice.StartCapture();
                 }
                 else if (_isActive && !value)
@@ -133,7 +133,7 @@ namespace BinksRouter.Network.Entities
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

@@ -12,33 +12,6 @@ namespace BinksRouter.Network
     {
         private static App CurrentApp => (App)Application.Current;
 
-        public bool Process(Interface sender, ArpPacket arp)
-        {
-            if (arp.Operation == ArpOperation.Request)
-            {
-                var arpResponse = new ArpPacket(
-                    ArpOperation.Response,
-                    arp.SenderHardwareAddress,
-                    arp.SenderProtocolAddress,
-                    sender.MacAddress,
-                    arp.TargetProtocolAddress
-                );
-
-                var ethernetPacket = new EthernetPacket(sender.MacAddress, arp.SenderHardwareAddress, EthernetType.None)
-                    { PayloadPacket = arpResponse };
-
-                sender.Send(ethernetPacket);
-            }
-            else if (arp.Operation == ArpOperation.Response)
-            {
-                var record = new ArpRecord(arp.SenderProtocolAddress, arp.SenderHardwareAddress);
-                CurrentApp.Logging.Info($"Creating ARP record: {record}");
-                return TryAdd(arp.SenderProtocolAddress, record);
-            }
-
-            return false;
-        }
-
         public void Request(Interface @interface, IPAddress ipAddress)
         {
             var arp = new ArpPacket(

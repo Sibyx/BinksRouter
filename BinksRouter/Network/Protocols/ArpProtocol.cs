@@ -1,4 +1,5 @@
-﻿using BinksRouter.Network.Entities;
+﻿using BinksRouter.Extensions;
+using BinksRouter.Network.Entities;
 using PacketDotNet;
 using SyslogLogging;
 
@@ -12,22 +13,51 @@ namespace BinksRouter.Network.Protocols
 
         public override void Process(Interface receiver, ArpPacket packet)
         {
-            if (packet.TargetProtocolAddress.Equals(receiver.NetworkAddress))
+            if (packet.Operation == ArpOperation.Request)
             {
-                _router.ArpTable.Process(receiver, packet);
-            }
-            else if (!packet.SenderProtocolAddress.Equals(receiver.NetworkAddress))
-            {
-                var route = _router.Routes.Resolve(packet.TargetProtocolAddress);
+                if (packet.TargetProtocolAddress.ToInt() == receiver.NetworkAddress.ToInt())
+                {
+                    // Odpovedz
+                    var arpResponse = new ArpPacket(
+                        ArpOperation.Response,
+                        packet.SenderHardwareAddress,
+                        packet.SenderProtocolAddress,
+                        receiver.MacAddress,
+                        packet.TargetProtocolAddress
+                    );
 
-                if (route != null)
-                {
-                    _router.ArpTable.Process(receiver, packet);
+                    var ethernetPacket = new EthernetPacket(receiver.MacAddress, packet.SenderHardwareAddress, EthernetType.Arp)
+                        { PayloadPacket = arpResponse };
+
+                    receiver.Send(ethernetPacket);
                 }
-                else
+                else if (!packet.TargetProtocolAddress.IsInSameSubnet(receiver.NetworkAddress, receiver.NetworkMask))
                 {
-                    _logger.Debug($"Unable to resolve {packet.TargetHardwareAddress}");
+                    // Proxy ARO
+                    var route = _router.Routes.Resolve(packet.TargetProtocolAddress);
+
+                    if (route != null)
+                    {
+                        var arpResponse = new ArpPacket(
+                            ArpOperation.Response,
+                            packet.SenderHardwareAddress,
+                            packet.SenderProtocolAddress,
+                            receiver.MacAddress,
+                            packet.TargetProtocolAddress
+                        );
+
+                        var ethernetPacket = new EthernetPacket(receiver.MacAddress, packet.SenderHardwareAddress, EthernetType.Arp)
+                            { PayloadPacket = arpResponse };
+
+                        receiver.Send(ethernetPacket);
+                    }
                 }
+            }
+            else if (packet.Operation == ArpOperation.Response)
+            {
+                var record = new ArpRecord(packet.SenderProtocolAddress, packet.SenderHardwareAddress);
+                _logger.Info($"Creating ARP record: {record}");
+                _router.ArpTable.TryAdd(packet.SenderProtocolAddress, record);
             }
         }
     }
