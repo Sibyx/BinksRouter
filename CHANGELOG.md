@@ -1,9 +1,10 @@
 ﻿# CHANGELOG
 
-## 0.4.0 : 
+## 0.4.0 : 2020/04/28
 
-- **Feature**: RIPv2
+- **Feature**: RIPv2 🎇
 - **Feature**: Router configuration window
+- **Change**: ProxyARP refactor
 
 ## 0.3.0 : 2020/04/13
 
