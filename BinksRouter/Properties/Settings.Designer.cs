@@ -118,5 +118,17 @@ namespace BinksRouter.Properties {
                 this["RipFlushTimer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("86400")]
+        public uint DhcpLeaseTime {
+            get {
+                return ((uint)(this["DhcpLeaseTime"]));
+            }
+            set {
+                this["DhcpLeaseTime"] = value;
+            }
+        }
     }
 }

@@ -1,5 +1,10 @@
 ﻿# CHANGELOG
 
+## 0.5.0 2020/05/04
+
+- **Feature**: DHCP server
+- **Change**: NuGet packages updated (living on a prayer)
+
 ## 0.4.0 : 2020/04/28
 
 - **Feature**: RIPv2 🎇

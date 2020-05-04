@@ -23,54 +23,51 @@
                 <ColumnDefinition Width="50*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <StackPanel 
-                Grid.Column="0"
-                Orientation = "Vertical"
-                Margin="5">
+            <GroupBox Grid.Column="0" Header="General" Padding="5" Margin="5">
+                <StackPanel Orientation = "Vertical">
+                    <TextBlock Padding="5">Route type</TextBlock>
+                    <TextBox Name="RouteTypeBox" Padding="5" IsReadOnly="True" Text="{Binding Type, Mode=OneWay}"/>
 
-                <TextBlock Padding="5">Route type</TextBlock>
-                <TextBox Name="RouteTypeBox" Padding="5" IsReadOnly="True" Text="{Binding Type, Mode=OneWay}"/>
+                    <TextBlock Padding="5">IP address</TextBlock>
+                    <TextBox Name="NetworkAddressBox" Padding="5" Text="{Binding NetworkAddress, Mode=OneWay}"/>
 
-                <TextBlock Padding="5">IP address</TextBlock>
-                <TextBox Name="NetworkAddressBox" Padding="5" Text="{Binding NetworkAddress, Mode=OneWay}"/>
+                    <TextBlock Padding="5">Mask</TextBlock>
+                    <TextBox Name="NetworkMaskBox" Padding="5" Text="{Binding NetworkMask, Mode=OneWay}"/>
 
-                <TextBlock Padding="5">Mask</TextBlock>
-                <TextBox Name="NetworkMaskBox" Padding="5" Text="{Binding NetworkMask, Mode=OneWay}"/>
+                    <TextBlock Padding="5">Next-Hop</TextBlock>
+                    <TextBox Name="NextHopBox" Padding="5" Text="{Binding NextHop, Mode=OneWay}"/>
 
-                <TextBlock Padding="5">Next-Hop</TextBlock>
-                <TextBox Name="NextHopBox" Padding="5" Text="{Binding NextHop, Mode=OneWay}"/>
+                    <TextBlock Padding="5">Outgoing interface</TextBlock>
+                    <ComboBox Name="InterfaceBox" Padding="5" Margin="0,0,0,5" Text="{Binding Interface, Mode=OneWay}">
 
-                <TextBlock Padding="5">Outgoing interface</TextBlock>
-                <ComboBox Name="InterfaceBox" Padding="5" Margin="0,0,0,5" Text="{Binding Interface, Mode=OneWay}">
+                    </ComboBox>
+                </StackPanel>
+            </GroupBox>
 
-                </ComboBox>
-            </StackPanel>
+            <GroupBox Grid.Column="1" Header="RIP" Padding="5" Margin="5">
+                <StackPanel Orientation = "Vertical">
+                    <TextBlock Padding="5">Status</TextBlock>
+                    <TextBox Name="StatusBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding Status, Mode=OneWay}"/>
 
-            <StackPanel 
-                Grid.Column="1"
-                Orientation = "Vertical"
-                Margin="5">
-                <TextBlock Padding="5">Status</TextBlock>
-                <TextBox Name="StatusBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding Status, Mode=OneWay}"/>
+                    <TextBlock Padding="5">Metric</TextBlock>
+                    <TextBox Name="MetricBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding Metric, Mode=OneWay}"/>
 
-                <TextBlock Padding="5">Metric</TextBlock>
-                <TextBox Name="MetricBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding Metric, Mode=OneWay}"/>
+                    <TextBlock Padding="5">Origin</TextBlock>
+                    <TextBox Name="OriginBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding Name, Mode=OneWay}"/>
 
-                <TextBlock Padding="5">Origin</TextBlock>
-                <TextBox Name="OriginBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding Name, Mode=OneWay}"/>
+                    <TextBlock Padding="5">Timer value</TextBlock>
+                    <TextBox Name="TimerValueBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding TimerValue, Mode=OneWay}"/>
 
-                <TextBlock Padding="5">Timer value</TextBlock>
-                <TextBox Name="TimerValueBox" Padding="5" Margin="0,0,0,5" IsEnabled="False" IsReadOnly="True" Text="{Binding TimerValue, Mode=OneWay}"/>
-
-                <CheckBox
-                    Name="RipEnabledBox"
-                    Margin="0,0,0,10"
-                    IsThreeState="False"
-                    IsChecked="{Binding RipEnabled, Mode=OneWay}"
-                >
-                    RIP
-                </CheckBox>
-            </StackPanel>
+                    <CheckBox
+                        Name="RipEnabledBox"
+                        Margin="0,0,0,10"
+                        IsThreeState="False"
+                        IsChecked="{Binding RipEnabled, Mode=OneWay}"
+                    >
+                        RIP
+                    </CheckBox>
+                </StackPanel>
+            </GroupBox>
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">

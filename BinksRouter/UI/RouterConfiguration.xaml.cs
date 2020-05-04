@@ -22,6 +22,7 @@ namespace BinksRouter.UI
             RipInvalidTimerBox.Text = Properties.Settings.Default.RipInvalidTimer.ToString();
             RipFlushTimerBox.Text = Properties.Settings.Default.RipFlushTimer.ToString();
             RipHolddownTimerBox.Text = Properties.Settings.Default.RipHolddownTimer.ToString();
+            DhcpLeaseTimeBox.Text = Properties.Settings.Default.DhcpLeaseTime.ToString();
 
         }
 
@@ -35,6 +36,7 @@ namespace BinksRouter.UI
             Properties.Settings.Default.RipInvalidTimer = Convert.ToUInt16(RipInvalidTimerBox.Text);
             Properties.Settings.Default.RipFlushTimer = Convert.ToUInt16(RipFlushTimerBox.Text);
             Properties.Settings.Default.RipHolddownTimer = Convert.ToUInt16(RipHolddownTimerBox.Text);
+            Properties.Settings.Default.DhcpLeaseTime = Convert.ToUInt32(DhcpLeaseTimeBox.Text);
 
             Close();
         }

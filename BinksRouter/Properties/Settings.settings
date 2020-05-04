@@ -26,5 +26,8 @@
     <Setting Name="RipFlushTimer" Type="System.UInt16" Scope="User">
       <Value Profile="(Default)">240</Value>
     </Setting>
+    <Setting Name="DhcpLeaseTime" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">86400</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

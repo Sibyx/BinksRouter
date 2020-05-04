@@ -9,7 +9,7 @@
         Title="Router Configuration" 
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Height="350" 
+        Height="400" 
         Width="600">
         
     <Grid>
@@ -32,13 +32,16 @@
                     <TextBox Name="HostnameBox" Padding="5" Margin="0,0,0,5"/>
 
                     <TextBlock Padding="5">ARP record lifetime (seconds)</TextBlock>
-                    <TextBox Name="ArpRecordLifetimeBox" Padding="5"/>
+                    <TextBox Name="ArpRecordLifetimeBox" Padding="5" PreviewTextInput="IsNumeric"/>
 
                     <TextBlock Padding="5">Syslog IP</TextBlock>
                     <TextBox Name="SyslogIpBox" Padding="5" Margin="0,0,0,5"/>
 
                     <TextBlock Padding="5">Syslog port</TextBlock>
                     <TextBox Name="SyslogPortBox" Padding="5" Margin="0,0,0,5" />
+
+                    <TextBlock Padding="5">DHCP Lease Time</TextBlock>
+                    <TextBox Name="DhcpLeaseTimeBox" Padding="5" PreviewTextInput="IsNumeric"/>
                 </StackPanel>
             </GroupBox>
 
